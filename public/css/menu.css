@@ -1,0 +1,225 @@
+/* Reset de márgenes y paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+  /* Estilo general de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+  /* Estilo para el encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding: 0 90px;
+}
+
+.logo img{
+    width: 400px;
+}
+
+.compañia h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+}
+
+.compañia p {
+    font-size: 18px;
+    color: #777;
+}
+
+.compañia{
+    padding: 10px 0;
+    display: flex;
+}
+
+.sesion{
+    width: 70px;
+    height: 70px;
+    position: relative;
+}
+
+.perfil-container i{   
+    position: absolute;
+    top: 40px;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: black;
+
+}
+
+
+  /* Estilo para el contenido */
+.content {
+    width: 75%;
+    margin: 50px;
+    margin: auto;
+    display: flex;
+    gap: 50px;
+    padding: 20px;
+    margin-top: 40px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.module-card {
+    height: 300px;
+    width: 400px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.module-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.module-info {
+    padding: 15px;
+}
+
+.module-info p {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+}
+
+  /* Estilo para el pie de página */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #888;
+}
+
+
+
+/*Menu de ventas */
+
+.container-header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding: 0 90px;
+}
+
+.main-modules{
+    width: 60%;
+    text-align: right;
+}
+
+.main-modules p{
+    color: black;
+    font-size: 18px;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-menu{
+    height: 120px;
+    width: 180px;
+}
+
+.completar-nav{
+    width: 40%;
+    height: 120px;
+}
+
+/* Estilo para los detalles del módulo específico */
+.module-detail {
+    width: 75%;
+    height: 100%;
+    padding-top: 90px;
+    margin-top: 50px;
+    margin: auto;
+}
+
+.module-detail h2 {
+    font-size: 45px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.module-detail-cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    flex-direction: row;
+    gap: 50px;
+    padding: 20px;
+}
+
+
+/*Perfil*/
+
+.perfil-container {
+    position: relative;
+    display: inline-block;
+}
+
+.perfil-icono {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.perfil-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    min-width: 180px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.perfil-dropdown div,
+.perfil-dropdown .cerrar-sesion {
+    padding: 10px;
+    text-align: center;
+}
+
+.perfil-dropdown .cerrar-sesion {
+    margin: 0;
+}
+
+.perfil-dropdown a {
+    display: inline-block;
+    width: 100%;
+    color: black;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #888;
+}
+
+.perfil-dropdown a:hover {
+    background-color: #1d1818;
+    color: white;
+}

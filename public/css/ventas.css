@@ -1,0 +1,143 @@
+body{
+    display: block;
+}
+
+.productos{
+    display: block;
+}
+
+.container-productos{
+    display: flex;
+    height: calc(100vh - 100px);
+    width: 100vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 40px;
+}
+
+.products-container{
+    margin: 30px;
+    position: relative;
+}
+
+.titulo-productos{
+    padding-left: 60px;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+    width: 70%;
+    min-height: 30%;
+    height: auto;
+    overflow-y: auto;
+    box-shadow: 0 0 10px #000;
+}
+
+.cerrar-modal {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Categoria*/
+
+
+.container-categoria{
+    text-align: center;
+}
+
+#category-form{
+    margin-top: 30px;
+    display: block;
+}
+
+.container-input{
+    margin: 10px;
+}
+
+.add-category{
+    margin-top: 20px;
+    width: 120px;
+    height: 28px;
+    background-color: yellow;
+    border-radius: 10px;
+}
+
+/* opciones categorias */
+
+/* Contenedor de cada categoría */
+.category-item {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* Imagen de la categoría */
+.category-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Los tres puntos para mostrar el menú */
+.menu-dots {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+}
+
+/* El menú de opciones */
+.options-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 10;
+    width: 150px;
+}
+
+/* Estilo de los enlaces dentro del menú */
+.options-menu a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 5px;
+}
+
+/* Hover effect */
+.options-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Mostrar el menú cuando se hace clic en los tres puntos */
+.category-item:hover .options-menu {
+    display: block;
+}

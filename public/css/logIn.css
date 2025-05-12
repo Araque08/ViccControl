@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(106, 177, 235); /* Azul claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+}
+
+.login-box {
+    background-color: rgb(236, 237, 248);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 600px;
+    height: 700px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.logo{
+    text-align: left;
+    padding-left: 30px;
+}
+
+.logo img {
+    width: 300px;
+    height: 100px;
+    margin-bottom: 50px;
+}
+
+form{
+    height: 400px;
+    display: inline;
+    vertical-align: auto;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group i {
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: black;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.input-group input {
+    width: 80%;
+    height: 60px;
+    padding: 10px;
+    padding-left: 60px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.input-group input:focus {
+    border-color: #007BFF;
+}
+
+.btn {
+    background-color: #FFB703;
+    color: black;
+    margin-top: 50px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 60%;
+    font-size: 16px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #FF9F00;
+}
+
+.footer{
+    margin-top: 100px;
+}
+
+.alerta {
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+
+.alerta-error {
+    position: absolute;
+    top: 90px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    width: 600px;
+}
