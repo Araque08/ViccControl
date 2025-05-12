@@ -54,11 +54,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
 <body>
 <div class="header-ventas">
     <div class="container-header">
-        <div class="regresar">
-
-        </div>
         <div class="compañia">
-
             <div class="perfil-container">
             <!-- 👤 Ícono clickeable -->
             <div class="sesion">
@@ -104,7 +100,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
                 </a>
             <?php endif; ?>
             <?php if (in_array('compras_inventario', $modulos_activos)): ?>
-                <a href="../compras_inventario/compras_inventario_menu.php">
+                <a href="../compras_inventario/compras_inventario.php">
                     <div class="module-card nav-menu">
                         <img src="../../../public/img/Modulos/ModuloComprasInventario.png" alt="Compras e Inventario">
                         <p>Compras e Inventario</p>
@@ -134,19 +130,39 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
 <!-- Módulo específico -->
 <div class="module-detail">
-    <h2>Modulo de RRHH Y Nomina</h2>
+    <h2>Modulo de Compras e Inventario</h2>
     <div class="module-detail-cards">
         <div class="module-card">
-            <img src="../../../public/img/ModuloVentas/PuntoVenta.png" alt="Punto de venta">
-            <div class="module-info">
-                <p>Punto de venta</p>
-            </div>
+            <a href="compras.php">
+                <img src="../../../public/img/ModuloVentas/PuntoVenta.png" alt="Punto de venta">
+                <div class="module-info">
+                    <p>Compras</p>
+                </div>
+            </a>
         </div>
         <div class="module-card">
-            <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
-            <div class="module-info">
-                <p>Productos</p>
-            </div>
+            <a href="#">    
+                <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+                <div class="module-info">
+                    <p>Inventario</p>
+                </div>
+            </a>
+        </div>
+        <div class="module-card">
+            <a href="#">    
+                <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+                <div class="module-info">
+                    <p>Facturas ingresadas</p>
+                </div>
+            </a>
+        </div>
+        <div class="module-card">
+            <a href="materia_prima.php">    
+                <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+                <div class="module-info">
+                    <p>Materia Prima</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>

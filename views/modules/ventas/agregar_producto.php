@@ -10,7 +10,7 @@ if (!isset($_SESSION['Usuario'])) {
 $id_producto = intval($_GET['id_producto'] ?? 0);
 
 // Consultar nombre del producto
-$stmt = $conexion->prepare("SELECT nombre_producto, precioVenta FROM Productos WHERE id_producto = ?");
+$stmt = $conexion->prepare("SELECT nombre_producto, precio_venta FROM Productos WHERE id_producto = ?");
 $stmt->bind_param("i", $id_producto);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -24,7 +24,7 @@ $producto = $result->fetch_assoc();
     <title>Receta - <?= htmlspecialchars($producto['nombre_producto']) ?></title>
 </head>
 <body>
-    <h2>Receta de: <?= htmlspecialchars($producto['nombre_producto']) ?> (Precio: $<?= $producto['precioVenta'] ?>)</h2>
+    <!--<h2>Receta de: <?= htmlspecialchars($producto['nombre_producto']) ?> (Precio: $<?= $producto['precioVenta'] ?>)</h2>-->
 
     <!-- Formulario para agregar ingrediente -->
     <form action="guardar_ingrediente.php" method="POST">

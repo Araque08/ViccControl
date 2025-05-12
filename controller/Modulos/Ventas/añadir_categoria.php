@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("ss", $categoryName, $uploadFile);
 
             if ($stmt->execute()) {
-                header("Location: ../../../../../views/modules/ventas/productos.php");
+                header("Location: /../../../views/modules/ventas/productos.php");
             } else {
                 echo "Error al agregar la categoría: " . $stmt->error;
             }

@@ -223,3 +223,30 @@ body {
     background-color: #1d1818;
     color: white;
 }
+
+/*Regresar*/
+
+.regresar{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.regresar i{
+    position: absolute;
+    left: 0;   
+    top: 30px;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: black;
+}
+
+.container-subModulo{
+    display: flex;
+}
+
+.nombre-pagina{
+    padding-left: 30px;
+    color: black;
+    font-size: 40px;
+}

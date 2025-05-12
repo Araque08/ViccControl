@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../index.php");
+    header("Location: ../../../index.php");
     exit;
 }
 
@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../index.php?expirada=1");
+        header("Location: ../../../index.php?expirada=1");
         exit;
     }
 }
@@ -41,29 +41,19 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <title>Productos</title>
     <link rel="stylesheet" href="../../../public/css/menu.css">
     <link rel="stylesheet" href="../../../public/css/ventas.css">
+    <link rel="stylesheet" href="../../../public/css/modal.css">
 </head>
 <body>
 <div class="header-ventas">
     <div class="container-header">
         <div class="compañia">
-            <div class="perfil-container">
-            <!-- 👤 Ícono clickeable -->
-            <div class="sesion">
-                <a class="perfil-icono" onclick="toggleDropdown()"><i class="fa-solid fa-user"></i></a>
-            </div>
-            
-
-                <!-- Menú oculto -->
-                <div id="perfilDropdown" class="perfil-dropdown">
-                    <div>👤 <?= $_SESSION['usuario'] ?? 'Usuario' ?></div>
-                    <div class="cerrar-sesion">
-                    <a href="../../../controller/cerrar_sesion.php">🚪 Cerrar sesión</a>
-                    </div>
-                    
+            <div class="container-subModulo">
+                <div class="regresar">
+                    <a href="ventas_menu.php">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
                 </div>
-            </div>
-            <div>
-            <a href="ventas_menu.php"> 🎇 <h1 class="Titulo-modulo"><strong>Productos</strong></h1></a>
+                <h1 class="nombre-pagina"><strong>Productos</strong></h1>
             </div>
         </div>
         <div class="logo">
@@ -72,9 +62,6 @@ $mesActual = ucfirst(strftime("%B %Y"));
     </div>
 </div>
 <div class="productos">
-    <div>
-        <h1 class="titulo-productos">Productos</h1>
-    </div>
 
     <div class="container-productos">
 
@@ -97,6 +84,8 @@ $mesActual = ucfirst(strftime("%B %Y"));
                     </div>';
             }
         ?>
+
+        <a href="nueva_receta.php">Hola Mundo</a>
 
         <div class="products-container" id="products-container">
             <a href="#" onclick="mostrarCategoria()">

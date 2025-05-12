@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../index.php?expirada=1");
+        header("Location: ../index.php?expirada=1");
         exit;
     }
 }
@@ -98,9 +98,9 @@ $mesActual = ucfirst(strftime("%B %Y"));
                         <p>Contabilidad</p>
                     </div>
                 </a>
-            <?php endif; ?>
+            <?php endif; ?> 
             <?php if (in_array('compras_inventario', $modulos_activos)): ?>
-                <a href="../compras_inventario/compras_inventario.php">
+                <a href="../compras_inventario/compras_inventario_menu.php">
                     <div class="module-card nav-menu">
                         <img src="../../../public/img/Modulos/ModuloComprasInventario.png" alt="Compras e Inventario">
                         <p>Compras e Inventario</p>
