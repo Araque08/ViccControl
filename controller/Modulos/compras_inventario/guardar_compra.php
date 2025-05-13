@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: /proyecto/index.php");
+    header("Location: ../../../index.php");
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../../conexionBD/conexion.php");
 
 // Verificar si los datos del formulario fueron enviados
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Si todo salió bien
-        header("/proyecto/views/modules/compras_inventario/compras.php");
+        header("../../../views/modules/compras_inventario/compras.php");
     } else {
         echo "Error al guardar la compra.";
     }

@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: /proyecto/index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: /proyecto/index.php?expirada=1");
+        header("Location: ../../index.php?expirada=1");
         exit;
     }
 }
@@ -46,7 +46,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <meta charset="UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Menú Principal</title>
-    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
+    <link rel="stylesheet" href="../../public/css/menu.css">
 </head>
 <body>
 <div class="header">
@@ -62,7 +62,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
                 <div id="perfilDropdown" class="perfil-dropdown">
                     <div>👤 <?= $_SESSION['usuario'] ?? 'Usuario' ?></div>
                     <div class="cerrar-sesion">
-                    <a href="/proyecto/controller/cerrar_sesion.php">🚪 Cerrar sesión</a>
+                    <a href="../../controller/cerrar_sesion.php">🚪 Cerrar sesión</a>
                     </div>
                     
                 </div>
@@ -73,23 +73,23 @@ $mesActual = ucfirst(strftime("%B %Y"));
             </div>
         </div>
         <div class="logo">
-            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="../../public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
 </div>
 
 <div class="content">
     <!-- Módulo de usuarios siempre visible -->
     <div class="module-card">
-        <a href="/proyecto/views/admin/usuarios.php">
-            <img src="/proyecto/public/img/Modulos/Usuarios.png" alt="Usuarios">
+        <a href="../../views/admin/usuarios.php">
+            <img src="../../public/img/Modulos/Usuarios.png" alt="Usuarios">
             <div class="module-info"><p>Usuarios</p></div>
         </a>
     </div>
 
     <?php if (in_array('ventas', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="/proyecto/views/modules/ventas/ventas_menu.php">
-                <img src="/proyecto/public/img/Modulos/ModuloVentas.png" alt="Módulo de ventas">
+            <a href="../../views/modules/ventas/ventas_menu.php">
+                <img src="../../public/img/Modulos/ModuloVentas.png" alt="Módulo de ventas">
                 <div class="module-info"><p>Modulo de ventas</p></div>
             </a>
         </div>
@@ -97,8 +97,8 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
     <?php if (in_array('contabilidad', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="/proyecto/views/modules/contabilidad/contabilidad_menu.php">
-                <img src="/proyecto/public/img/Modulos/Modulocontabilidad.png" alt="Módulo de contabilidad">
+            <a href="../../views/modules/contabilidad/contabilidad_menu.php">
+                <img src="../../public/img/Modulos/Modulocontabilidad.png" alt="Módulo de contabilidad">
                 <div class="module-info"><p>Modulo de contabilidad</p></div>
             </a>
         </div>
@@ -106,8 +106,8 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
     <?php if (in_array('compras_inventario', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="/proyecto./views/modules/compras_inventario/compras_inventario.php">
-                <img src="/proyecto/public/img/Modulos/ModuloComprasInventario.png" alt="Módulo de compras e Inventario">
+            <a href="../../views/modules/compras_inventario/compras_inventario.php">
+                <img src="../../public/img/Modulos/ModuloComprasInventario.png" alt="Módulo de compras e Inventario">
                 <div class="module-info"><p>Modulo de compras e Inventario</p></div>
             </a>
         </div>
@@ -115,8 +115,8 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
     <?php if (in_array('clientes_proveedores', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="/proyecto/views/modules/clientes_proveedores/clientes_proveedores_menu.php">
-                <img src="/proyecto/public/img/Modulos/ModuloClientesProveedores.png" alt="Módulo de clientes y Proveedores">
+            <a href="../../views/modules/clientes_proveedores/clientes_proveedores_menu.php">
+                <img src="../../public/img/Modulos/ModuloClientesProveedores.png" alt="Módulo de clientes y Proveedores">
                 <div class="module-info"><p>Modulo de clientes y Proveedores</p></div>
             </a>
         </div>
@@ -124,8 +124,8 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
     <?php if (in_array('rrhh_nomina', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="/proyecto/views/modules/rrhh_nomina/rrhh_nomina_menu.php">
-                <img src="/proyecto/public/img/Modulos/ModuloRHNomina.png" alt="Módulo de RRHH y Nómina">
+            <a href="../../views/modules/rrhh_nomina/rrhh_nomina_menu.php">
+                <img src="../../public/img/Modulos/ModuloRHNomina.png" alt="Módulo de RRHH y Nómina">
                 <div class="module-info"><p>Modulo de RRHH y Nómina</p></div>
             </a>
         </div>
@@ -136,7 +136,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <p>&copy; 2025-ViccControl</p>
 </div>
 
-<script src="/proyecto/public/js/sesion.js"></script>
+<script src="../../public/js/sesion.js"></script>
 </body>
 </html>
 

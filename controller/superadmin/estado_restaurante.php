@@ -5,7 +5,7 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../conexionBD/conexion.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['estado_actual'])) {
     $id_restaurante = $_POST['id'];
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['estado_
     $stmt->bind_param("si", $nuevo_estado, $id_restaurante);
     $stmt->execute();
 
-    header("Location: /proyecto/views/superadmin/superadmin.php");
+    header("Location: ../../views/superadmin/superadmin.php");
     exit;
 } else {
     echo "Solicitud inválida.";

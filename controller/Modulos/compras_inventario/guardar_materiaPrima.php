@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: /proyecto/index.php");
+    header("Location: ../../../index.php");
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../../conexionBD/conexion.php");
 
 // Verificar si el formulario fue enviado con el método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssssi", $nombre, $unidad, $categoria, $stock_min, $descripcion, $restaurante_id);
 
     if ($stmt->execute()) {
-        header("Location: /proyecto/views/modules/compras_inventario/materia_prima.php");
+        header("Location: ../../../views/modules/compras_inventario/materia_prima.php");
     } else {
         echo "Error al agregar la materia prima.";
     }

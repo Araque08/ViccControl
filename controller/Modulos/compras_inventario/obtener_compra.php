@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-include("/proyecto/conexionBD/conexion.php");
+include("../../../conexionBD/conexion.php");
 
 if (isset($_GET['id'])) {
     $compra_id = $_GET['id'];

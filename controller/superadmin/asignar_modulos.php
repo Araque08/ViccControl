@@ -1,6 +1,6 @@
 <?php
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../conexionBD/conexion.php");
 
 $id_restaurante = $_POST['id_restaurante'];
 $modulo = $_POST['nombre_modulo'];

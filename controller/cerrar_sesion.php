@@ -4,5 +4,5 @@ session_unset();  // Limpia todas las variables de sesión
 session_destroy(); // Destruye la sesión actual
 
 // Redirige al login
-header("Location: /proyecto/index.php"); 
+header("Location: ../index.php"); 
 exit;

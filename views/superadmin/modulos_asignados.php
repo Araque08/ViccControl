@@ -3,11 +3,11 @@ session_start();
 
 // Validación de sesión y permisos
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
-    header("Location: /proyecto/index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../conexionBD/conexion.php");
 
 $id_restaurante = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -49,7 +49,7 @@ $lista_modulos = [
 <head>
     <meta charset="UTF-8">
     <title>Módulos del Restaurante</title>
-    <link rel="stylesheet" href="/proyecto/public/css/admin.css">
+    <link rel="stylesheet" href="../../public/css/admin.css">
 </head>
 <body>
     <h2>Módulos asignados a: <?= htmlspecialchars($restaurante['nombre_restaurante']) ?></h2>
@@ -58,7 +58,7 @@ $lista_modulos = [
         <?php foreach ($lista_modulos as $clave => $nombre): 
             $estado = isset($modulos[$clave]) ? $modulos[$clave] : 'inactivo'; ?>
             
-            <form method="POST" action="/proyecto/controller/superadmin/estado_modulo.php" onsubmit="return confirm('¿Deseas cambiar el acceso al módulo <?= $nombre ?>?')">
+            <form method="POST" action="../../controller/superadmin/estado_modulo.php" onsubmit="return confirm('¿Deseas cambiar el acceso al módulo <?= $nombre ?>?')">
                 <input type="hidden" name="id_restaurante" value="<?= $id_restaurante ?>">
                 <input type="hidden" name="modulo" value="<?= $clave ?>">
                 <input type="hidden" name="estado_actual" value="<?= $estado ?>">

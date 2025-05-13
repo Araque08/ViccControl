@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrar Empleado</title>
-    <link rel="stylesheet" href="/proyecto/public/css/admin.css"> <!-- Opcional, si tienes estilos -->
+    <link rel="stylesheet" href="../../public/css/admin.css"> <!-- Opcional, si tienes estilos -->
 </head>
 <body>
 <h2>Registrar Nuevo Empleado</h2>
-<form action="/proyecto/controller/admin/guardar_empleado.php" method="POST">
+<form action="../../controller/admin/guardar_empleado.php" method="POST">
     <label>Nombre:</label>
     <input type="text" name="nombre" required><br>
 
