@@ -3,9 +3,6 @@
 include("../../conexionBD/conexion.php"); // Conexión a la base de datos
 session_start(); // Inicia la sesión para guardar datos del usuario
 
-define('BASE_URL', '../../../proyecto');
-
-
 // Datos que vienen del formulario de login
 $compania = $_POST['compania'];
 $usuario = $_POST['usuario'];
@@ -43,7 +40,7 @@ if ($resultado->num_rows === 1) {
     // Redirige automáticamente a la ruta asignada al rol (usando router.php)
     
     echo($_SESSION['ruta_inicio']);
-    header("Location: " . BASE_URL .$_SESSION['ruta_inicio']);
+    header("Location: " .$_SESSION['ruta_inicio']);
     exit;
 } else {
     // Si no coincide el usuario, contraseña o restaurante
