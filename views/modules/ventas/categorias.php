@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
@@ -31,10 +27,6 @@ $id_restaurante = $_SESSION['id_restaurante'];
 
 $sql = "SELECT * FROM CategoriaProducto";
 $result = $conexion->query($sql);
-
-setlocale(LC_TIME, 'es_ES.UTF-8');
-$nombreRestaurante = $_SESSION['Restaurante'] ?? 'Restaurante';
-$mesActual = ucfirst(strftime("%B %Y"));
 ?>
 
 <!DOCTYPE html>
