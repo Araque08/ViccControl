@@ -3,7 +3,7 @@
 include("/proyecto/conexionBD/conexion.php"); // Conexión a la base de datos
 session_start(); // Inicia la sesión para guardar datos del usuario
 
-define('BASE_URL', '/proyecto/ViccControl');
+define('BASE_URL', '/proyecto');
 
 
 // Datos que vienen del formulario de login
