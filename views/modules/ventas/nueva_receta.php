@@ -1,6 +1,6 @@
 <?php
 // Mostrar los ingredientes de la receta para el producto
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 $id_producto = $_GET['id_producto'];
 
@@ -14,7 +14,7 @@ $stmt->execute();
 $resultado_receta = $stmt->get_result();
 
 // Obtener los ingredientes de la base de datos
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 $sql_ingredientes = "SELECT * FROM MateriaPrima WHERE fk_id_restaurante = ?";
 $stmt = $conexion->prepare($sql_ingredientes);
 $stmt->bind_param("i", $_SESSION['id_restaurante']);

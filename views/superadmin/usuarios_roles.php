@@ -1,9 +1,9 @@
 <?php
-include("../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 session_start();
 
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ $resultado = $conexion->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
-    <link rel="stylesheet" href="../public/css/admin.css">
+    <link rel="stylesheet" href="/proyecto/public/css/admin.css">
 </head>
 <body>
 

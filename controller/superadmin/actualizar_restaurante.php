@@ -1,5 +1,5 @@
 <?php
-include("../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 $id = $_POST['id'];
 $nombre = $_POST['nombre'];
@@ -11,5 +11,5 @@ $stmt = $conexion->prepare($sql);
 $stmt->bind_param("sssi", $nombre, $direccion, $membresia, $id);
 $stmt->execute();
 
-header("Location: ../../views/superadmin/superadmin.php");
+header("Location: /proyecto/views/superadmin/superadmin.php");
 ?>

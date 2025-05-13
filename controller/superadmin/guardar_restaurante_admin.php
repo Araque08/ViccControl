@@ -1,5 +1,5 @@
 <?php
-include("../../conexionBD/conexion.php"); // Conexión a la base de datos
+include("/proyecto/conexionBD/conexion.php"); // Conexión a la base de datos
 
 // 📥 Datos recibidos del formulario
 $nombre_restaurante = $_POST['nombre_restaurante'];

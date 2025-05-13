@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../index.php?expirada=1");
+        header("Location: /proyecto/index.php?expirada=1");
         exit;
     }
 }
@@ -49,7 +49,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Modulo de Control</title>
-    <link rel="stylesheet" href="../../../public/css/menu.css">
+    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
 </head>
 <body>
 <div class="header-ventas">
@@ -66,7 +66,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
                 <div id="perfilDropdown" class="perfil-dropdown">
                     <div>👤 <?= $_SESSION['usuario'] ?? 'Usuario' ?></div>
                     <div class="cerrar-sesion">
-                    <a href="../../../controller/cerrar_sesion.php">🚪 Cerrar sesión</a>
+                    <a href="/proyecto/controller/cerrar_sesion.php">🚪 Cerrar sesión</a>
                     </div>
                     
                 </div>
@@ -77,48 +77,48 @@ $mesActual = ucfirst(strftime("%B %Y"));
             </div>
         </div>
         <div class="logo">
-            <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
     <nav class="nav">
         <!-- Módulos principales -->
         <div class="main-modules">
             <?php if (in_array('ventas', $modulos_activos)): ?>
-                <a href="../ventas/ventas_menu.php">
+                <a href="/proyecto/ventas/ventas_menu.php">
                     <div class="module-card nav-menu">
-                        <img src="../../../public/img/Modulos/ModuloVentas.png" alt="Ventas">
+                        <img src="/proyecto/public/img/Modulos/ModuloVentas.png" alt="Ventas">
                         <p>Ventas</p>
                     </div>
                 </a>
             <?php endif; ?>
             <?php if (in_array('contabilidad', $modulos_activos)): ?>
-                <a href="../contabilidad/contabilidad_menu.php">
+                <a href="/proyecto/contabilidad/contabilidad_menu.php">
                     <div class="module-card nav-menu">
-                        <img src="../../../public/img/Modulos/Modulocontabilidad.png" alt="Contabilidad">
+                        <img src="/proyecto/public/img/Modulos/Modulocontabilidad.png" alt="Contabilidad">
                         <p>Contabilidad</p>
                     </div>
                 </a>
             <?php endif; ?> 
             <?php if (in_array('compras_inventario', $modulos_activos)): ?>
-                <a href="../compras_inventario/compras_inventario_menu.php">
+                <a href="/proyecto/compras_inventario/compras_inventario_menu.php">
                     <div class="module-card nav-menu">
-                        <img src="../../../public/img/Modulos/ModuloComprasInventario.png" alt="Compras e Inventario">
+                        <img src="/proyecto/public/img/Modulos/ModuloComprasInventario.png" alt="Compras e Inventario">
                         <p>Compras e Inventario</p>
                     </div>
                 </a>
             <?php endif; ?>
             <?php if (in_array('clientes_proveedores', $modulos_activos)): ?>
-                <a href="../clientes_proveedores/clientes_proveedores_menu.php">
+                <a href="/proyecto/clientes_proveedores/clientes_proveedores_menu.php">
                     <div class="module-card nav-menu">
-                        <img src="../../../public/img/Modulos/ModuloClientesProveedores.png" alt="Clientes y Proveedores">
+                        <img src="/proyecto/public/img/Modulos/ModuloClientesProveedores.png" alt="Clientes y Proveedores">
                         <p>Clientes y Proveedores</p>
                     </div>
                 </a>
             <?php endif; ?>
             <?php if (in_array('rrhh_nomina', $modulos_activos)): ?>
-                <a href="../rrhh_nomina/rrhh_nomina_menu.php">
+                <a href="/proyecto/rrhh_nomina/rrhh_nomina_menu.php">
                     <div class="module-card nav-menu">
-                        <img src="../../../public/img/Modulos/ModuloRHNomina.png" alt="RRHH y Nómina">
+                        <img src="/proyecto/public/img/Modulos/ModuloRHNomina.png" alt="RRHH y Nómina">
                         <p>RRHH y Nómina</p>
                     </div>
                 </a>
@@ -134,7 +134,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <div class="module-detail-cards">
         <div class="module-card">
             <a href="#">
-                <img src="../../../public/img/ModuloVentas/PuntoVenta.png" alt="Punto de venta">
+                <img src="/proyecto/public/img/ModuloVentas/PuntoVenta.png" alt="Punto de venta">
                 <div class="module-info">
                     <p>Punto de venta</p>
                 </div>
@@ -143,7 +143,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
         
         <div class="module-card">
             <a href="categorias.php">
-                <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+                <img src="proyecto/public/img/ModuloVentas/Productos.png" alt="Productos">
                 <div class="module-info">
                     <p>Productos</p>
                 </div>
@@ -155,6 +155,6 @@ $mesActual = ucfirst(strftime("%B %Y"));
 <div class="footer">
     <p>&copy; 2025-ViccControl</p>
 </div>
-<script src="../../../public/js/sesion.js"></script>
+<script src="/proyecto/public/js/sesion.js"></script>
 </body>
 </html>

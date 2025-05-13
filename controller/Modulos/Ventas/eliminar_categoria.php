@@ -4,11 +4,11 @@ session_start();
 
 // Verificar si el usuario está logueado (acceso autorizado)
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: /../../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // Obtener el ID de la categoría que se quiere eliminar
 if (isset($_GET['id'])) {

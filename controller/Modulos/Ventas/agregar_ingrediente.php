@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ingrediente = $_POST['ingrediente'];

@@ -1,9 +1,9 @@
 <?php
 
-include("../../conexionBD/conexion.php"); // Conexión a la base de datos
+include("/proyecto/conexionBD/conexion.php"); // Conexión a la base de datos
 session_start(); // Inicia la sesión para guardar datos del usuario
 
-define('BASE_URL', '../../../ViccControl');
+define('BASE_URL', '/proyecto/ViccControl');
 
 
 // Datos que vienen del formulario de login
@@ -47,7 +47,7 @@ if ($resultado->num_rows === 1) {
     exit;
 } else {
     // Si no coincide el usuario, contraseña o restaurante
-    header("Location: ../../index.php?error=1");
+    header("Location: /proyecto/index.php?error=1");
     exit;
 }
 

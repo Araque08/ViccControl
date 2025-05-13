@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 

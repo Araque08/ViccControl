@@ -16,7 +16,7 @@
             <div class="logo">
                 <img src="/proyecto/public/img/ViccControlImg.png" alt="Logo VICControl">
             </div>
-            <form action="/../controller/auth/logIn.php" method="POST">
+            <form action="/proyecto/controller/auth/logIn.php" method="POST">
                 <div class="input-group">
                     <i class="fas fa-home"></i>
                     <input type="text" id="compania" name="compania" placeholder="Compañía" required>

@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../../index.php?expirada=1");
+        header("Location: /proyecto/index.php?expirada=1");
         exit;
     }
 }
@@ -54,9 +54,9 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Modulo de Control</title>
-    <link rel="stylesheet" href="../../../public/css/menu.css">
-    <link rel="stylesheet" href="../../../public/css/compras_inventario.css">
-    <link rel="stylesheet" href="../../../public/css/modal.css">
+    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
+    <link rel="stylesheet" href="/proyecto/public/css/compras_inventario.css">
+    <link rel="stylesheet" href="/proyecto/public/css/modal.css">
 </head>
 <body>
 <div class="header-ventas">
@@ -72,7 +72,7 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
             </div>
         </div>
         <div class="logo">
-            <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
 <!--Formulario compras -->
@@ -83,7 +83,7 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
             <!-- Formulario para crear nueva materia prima -->
             <div class="form-section">
                 <h3>Crear nueva materia prima</h3>
-                <form action="/../../../controller/Modulos/compras_inventario/guardar_materiaPrima.php" method="POST">
+                <form action="/proyecto/controller/Modulos/compras_inventario/guardar_materiaPrima.php" method="POST">
                     <input type="text" name="nombre" placeholder="Nombre" required>
                     <input type="text" name="unidad" placeholder="Unidad Medida" required>
                     <!-- Categoría Dropdown o botón para agregar nueva categoría -->
@@ -160,6 +160,6 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
         </div>
     </div>
 
-    <script src="../../../public/js/compras_inventario.js"></script>
+    <script src="/proyecto/public/js/compras_inventario.js"></script>
 </body>
 </html>

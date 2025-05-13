@@ -5,7 +5,7 @@ if ($_SESSION['rol'] !== 'Administrador') {
     exit;
 }
 
-include("../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // Obtener todos los roles disponibles (excepto SuperAdmin)
 $sql = "SELECT id_rol, nombre_rol FROM rol WHERE nombre_rol != 'SuperAdmin'";
@@ -17,12 +17,12 @@ $resultado = $conexion->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Crear Usuario de Empleado</title>
-    <link rel="stylesheet" href="../../public/css/form.css"> <!-- Estilo si lo deseas -->
+    <link rel="stylesheet" href="/proyecto/public/css/form.css"> <!-- Estilo si lo deseas -->
 </head>
 <body>
     <h2>➕ Crear Usuario para Empleado</h2>
 
-    <form action="../../controller/admin/crear_usuario.php" method="POST">
+    <form action="/proyecto/controller/admin/crear_usuario.php" method="POST">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" required><br>
 

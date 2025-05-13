@@ -1,5 +1,5 @@
 <?php
-include("../../conexionBD/conexion.php");  // Conecta con la base de datos
+include("/proyecto/conexionBD/conexion.php");  // Conecta con la base de datos
 session_start();          // Usa sesión para identificar qué admin está creando al empleado
 
 // Verifica que el usuario logueado sea un administrador

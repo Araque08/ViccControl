@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 ?>
@@ -19,7 +19,7 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
         <h1>Crear Restaurante+Admin</h1>
 
 
-        <form class="form_crearRestaurante" action="../../controller/superadmin/guardar_restaurante_admin.php" method="POST">
+        <form class="form_crearRestaurante" action="/proyecto/controller/superadmin/guardar_restaurante_admin.php" method="POST">
             <div class="container_nuevoRestaurante">
                 <div class="restaurante">                                                                               
                     <h2>Nuevo Restaurante</h2>

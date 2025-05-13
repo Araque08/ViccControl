@@ -2,6 +2,8 @@
 // superadmin.php
 session_start();
 
+include("/proyecto/conexionBD/conexion.php");
+
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200; // 20 minutos
 
@@ -10,7 +12,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../index.php?expirada=1");
+        header("Location: /proyecto/index.php?expirada=1");
         exit;
     }
 }
@@ -18,11 +20,10 @@ $_SESSION['ultimo_acceso'] = time();
 
 
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../conexionBD/conexion.php");
 $sql = "SELECT * FROM Restaurante";
 $resultado = $conexion->query($sql);
 ?>
@@ -34,8 +35,8 @@ $resultado = $conexion->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel SuperAdmin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../public/css/admin.css">
-    <link rel="stylesheet" href="../../public/css/modal.css">
+    <link rel="stylesheet" href="/proyecto/public/css/admin.css">
+    <link rel="stylesheet" href="/proyecto/public/css/modal.css">
 </head>
 <body>
 <div class="header">
@@ -44,7 +45,7 @@ $resultado = $conexion->query($sql);
     </div>
 
     <div class="logo">
-        <img src="../../public/img/ViccControlImg.png" alt="logo de la compañia">
+        <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
     </div>
 </div>
 
@@ -53,7 +54,7 @@ $resultado = $conexion->query($sql);
         <li><a href="#" onclick="mostrarUsuarios()">👤 Usuarios y Roles</a></li>
         <li><a href="#" onclick="mostrarGestionRoles()">🛠 Gestionar Roles</a></li>
         <li><a href="dashboard.php">📊 Estadísticas</a></li>
-        <li><a href="../../controller/cerrar_sesion.php">🚪 Cerrar sesión</a></li>   
+        <li><a href="/proyecto/controller/cerrar_sesion.php">🚪 Cerrar sesión</a></li>   
     </ul>
 </div>
 
@@ -83,7 +84,7 @@ $resultado = $conexion->query($sql);
                     <td><?= $row['fecha_inicio_membresia'] ?> - <?= $row['fecha_fin_membresia'] ?></td>
                     <td><button onclick="mostrarEditarRestaurante(<?= $row['id_restaurante'] ?>)">✏️</button></td>
                     <td>
-                        <form method="POST" action="../../controller/superadmin/estado_restaurante.php" onsubmit="return confirm('¿Deseas cambiar el estado de este restaurante?')">
+                        <form method="POST" action="/proyecto/controller/superadmin/estado_restaurante.php" onsubmit="return confirm('¿Deseas cambiar el estado de este restaurante?')">
                             <input type="hidden" name="id" value="<?= $row['id_restaurante'] ?>">
                             <input type="hidden" name="estado_actual" value="<?= $row['estado'] ?>">
                             <button type="submit">
@@ -133,7 +134,7 @@ $resultado = $conexion->query($sql);
         <div id="contenidoVerModulos"></div>
     </div>
 </div>
-<script src="../../public/js/admin.js"></script>
+<script src="/proyecto/public/js/admin.js"></script>
 </body>
 </html>
 

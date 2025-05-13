@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // Verificar si los datos fueron enviados por el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ejecutamos la inserción
     if ($stmt_insert->execute()) {
-        header("../../../views/modules/compras_inventario/materia_prima.php");
+        header("/proyecto/views/modules/compras_inventario/materia_prima.php");
     } else {
         echo "Error al agregar la categoría.";
     }

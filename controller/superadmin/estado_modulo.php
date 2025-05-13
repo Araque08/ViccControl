@@ -3,11 +3,11 @@ session_start();
 
 // Validación de SuperAdmin
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
-    header("Location: ../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // Verificar si llegaron los datos necesarios
 if (isset($_POST['id_restaurante'], $_POST['modulo'], $_POST['estado_actual'])) {
@@ -46,7 +46,7 @@ if (isset($_POST['id_restaurante'], $_POST['modulo'], $_POST['estado_actual'])) 
         }
 
         if ($stmt->execute()) {
-            header("Location: ../../views/superadmin/superadmin.php");
+            header("Location: /proyecto/views/superadmin/superadmin.php");
             exit;
         } else {
             echo "❌ Error al guardar el estado del módulo.";

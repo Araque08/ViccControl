@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../../index.php?expirada=1");
+        header("Location: /proyecto/index.php?expirada=1");
         exit;
     }
 }
@@ -72,8 +72,8 @@ $result_compras = $stmt_compras->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Modulo de Control</title>
-    <link rel="stylesheet" href="../../../public/css/menu.css">
-    <link rel="stylesheet" href="../../../public/css/compras_inventario.css">
+    <link rel="stylesheet" href="proyecto/public/css/menu.css">
+    <link rel="stylesheet" href="proyecto/public/css/compras_inventario.css">
 </head>
 <body>
 <div class="header-ventas">
@@ -89,7 +89,7 @@ $result_compras = $stmt_compras->get_result();
             </div>
         </div>
         <div class="logo">
-            <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
 <!--Formulario compras -->
@@ -117,7 +117,7 @@ $result_compras = $stmt_compras->get_result();
                             <option value="">Agregar una nueva Factura</option>
                         </select>     
                 </div>
-                <form action="/../../../controller/Modulos/compras_inventario/guardar_compra.php" method="POST">
+                <form action="/proyecto/controller/Modulos/compras_inventario/guardar_compra.php" method="POST">
                     <div>
                         <select name="proveedor" id="categoria" required>
                             <option value="">Seleccionar proveedor</option>
@@ -191,7 +191,7 @@ $result_compras = $stmt_compras->get_result();
                     </tr>
                 </thead>
                 <tbody>
-                     <?php 
+                    <?php 
                         // Variable para el contador de elementos
                         $counter = 1;
                         
@@ -225,6 +225,6 @@ $result_compras = $stmt_compras->get_result();
         </div>  
     </div>
 
-    <script src="/../../../public/js/cargar_datos_compra.js"></script>
+    <script src="/proyecto/public/js/cargar_datos_compra.js"></script>
 </body>
 </html>
