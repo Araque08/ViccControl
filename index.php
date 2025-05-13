@@ -9,7 +9,7 @@ if (isset($_SESSION['ruta_inicio'])) {
 }
 
 // Si no hay sesión, mostramos el formulario
-include("/views/auth/form_inicio.php");
+include("views/auth/form_inicio.php");
 ?>
 
 <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
