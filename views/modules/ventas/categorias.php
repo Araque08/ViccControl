@@ -11,7 +11,7 @@ if (!isset($_SESSION['Usuario'])) {
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("/../../../conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
