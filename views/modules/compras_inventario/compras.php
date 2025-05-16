@@ -40,27 +40,41 @@ $result = $stmt->get_result();
 
 // Consulta para obtener las compras y los detalles de las compras
 $sql_compras = "
-    SELECT 
+    SELECT DISTINCT 
         c.id_compra, 
         c.fk_id_proveedor, 
         c.fecha_compra, 
         c.totalcompra, 
-        p.nombre_proveedor,
-        dc.fk_id_materia_prima, 
-        mp.nombre_materia_prima, 
-        dc.cantidad
+        p.nombre_proveedor
     FROM Compras c
     JOIN Proveedores p ON c.fk_id_proveedor = p.id_proveedor
-    JOIN DetalleCompra dc ON c.id_compra = dc.fk_id_compra
-    JOIN MateriaPrima mp ON dc.fk_id_materia_prima = mp.id_materia_prima
     WHERE c.fk_id_restaurante = ?";
 
+
 $stmt_compras = $conexion->prepare($sql_compras);
-$stmt_compras->bind_param("i", $_SESSION['id_restaurante']);
+$stmt_compras->bind_param("i",  $_SESSION['id_restaurante']);
 $stmt_compras->execute();
 $result_compras = $stmt_compras->get_result();
 
 
+$sql_detalle = "SELECT 
+    dc.id_detalle_compra,
+    mp.nombre_materia_prima AS producto,
+    dc.fk_id_compra AS num_docu,
+    dc.cantidad,
+    dc.precio,
+    c.fecha_compra AS fecha,
+    p.nombre_proveedor AS proveedor
+FROM DetalleCompra dc
+JOIN MateriaPrima mp ON dc.fk_id_materia_prima = mp.id_materia_prima
+JOIN Compras c ON dc.fk_id_compra = c.id_compra
+JOIN Proveedores p ON c.fk_id_proveedor = p.id_proveedor
+WHERE dc.fk_id_compra = ?";
+
+$stmt_detalle = $conexion->prepare($sql_detalle);
+$stmt_detalle->bind_param("i",  $_SESSION['id_restaurante']);
+$stmt_detalle->execute();
+$result_detalle = $stmt_detalle->get_result();
 
 ?>
 
@@ -114,12 +128,12 @@ $result_compras = $stmt_compras->get_result();
                                 echo '<option value="">No hay compras realizadas</option>';
                             }
                             ?>
-                            <option value="">Agregar una nueva Factura</option>
+                            <option value="nueva">Nueva Factura</option>
                         </select>     
                 </div>
                 <form action="/../../../controller/Modulos/compras_inventario/guardar_compra.php" method="POST">
                     <div>
-                        <select name="proveedor" id="categoria" required>
+                        <select name="proveedor" id="proveedor" required>
                             <option value="">Seleccionar proveedor</option>
                             <?php
                             // Verificar si hay proveedores disponibles
@@ -138,8 +152,8 @@ $result_compras = $stmt_compras->get_result();
 
                     </div>
                     <input type="text" name="numero_factura" id="numero_factura" placeholder="Numero Factura" required> 
-                    <input type="date" name="fecha_factura" placeholder="Unidad Medida" required>       
-                    <input type="number" name="total_neto" placeholder="Total Neto" required>
+                    <input type="date" name="fecha_factura" id="fecha_factura" placeholder="Unidad Medida" required>       
+                    <input type="number" name="total_factura" id="total_factura" placeholder="Total Neto" required>
                     <!-- Categoría Dropdown o botón para agregar nueva categoría -->
                     <div>
                         <select name="materia_prima[]" id="categoria" required>
@@ -185,46 +199,33 @@ $result_compras = $stmt_compras->get_result();
                         <th>Producto</th>
                         <th>Num Docu</th>
                         <th>Cntd</th>
+                        <th>Precio</th>
                         <th>Fecha</th>
                         <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                     <?php 
-                        // Variable para el contador de elementos
-                        $counter = 1;
-                        
-                        // Verificar si hay compras disponibles
-                        if ($result_compras->num_rows > 0) {
-                            while ($compra = $result_compras->fetch_assoc()) {
-                                echo '<tr>';
-                                
-                                // Mostrar el número secuencial en lugar del id_compra
-                                echo '<td>' . $counter . '</td>';
-                                
-                                // Mostrar los demás datos
-                                echo '<td>' . $compra['nombre_materia_prima'] . '</td>';
-                                echo '<td>' . $compra['id_compra'] . '</td>';
-                                echo '<td>' . $compra['cantidad'] . '</td>';
-                                echo '<td>' . $compra['fecha_compra'] . '</td>';
-                                echo '<td>' . $compra['nombre_proveedor'] . '</td>';
-                                echo '<td><a href="#">Editar</a> | <a href="#">Eliminar</a></td>';
-                                
-                                echo '</tr>';
-
-                                // Incrementar el contador para el siguiente número
-                                $counter++;
-                            }
-                        } else {
-                            echo '<tr><td colspan="7">No hay compras registradas.</td></tr>';
-                        }
-                        ?>             
-                </tbody>
+                <tbody></tbody>
+                <tfoot></tfoot>
             </table>
         </div>  
     </div>
-
+    <div id="mensaje-validacion" style="
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f4f4;
+    border: 2px solid #333;
+    padding: 20px 40px;
+    z-index: 9999;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    text-align: center;
+    ">
+    </div>
     <script src="/../../../public/js/cargar_datos_compra.js"></script>
 </body>
 </html>

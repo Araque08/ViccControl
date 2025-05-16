@@ -13,6 +13,7 @@ if (!isset($_SESSION['Usuario'])) {
     exit;
 }
 
+
 // Obtener todos los productos y sumar el costo de sus recetas
 $sql = "
 SELECT 
@@ -33,12 +34,9 @@ $resultado = $conexion->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Recetas Hamburguesas</title>
-    <style>
-        table { width: 80%; margin: auto; border-collapse: collapse; }
-        th, td { border: 1px solid #999; padding: 8px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        a.edit-icon { text-decoration: none; font-size: 1.2em; }
-    </style>
+    <link rel="stylesheet" href="/../../../public/css/menu.css">
+    <link rel="stylesheet" href="/../../../public/css/ventas.css">
+    <link rel="stylesheet" href="/../../../public/css/modal.css">
 </head>
 <body>
     <h1 style="text-align:center;">Recetas Hamburguesas</h1>
@@ -51,19 +49,24 @@ $resultado = $conexion->query($sql);
             <th>Acciones</th>
         </tr>
 
-        <?php
-        while ($fila = $resultado->fetch_assoc()) {
-            echo "<tr>
-                <td>{$fila['id_producto']}</td>
-                <td>{$fila['nombre_producto']}</td>
-                <td>$" . number_format($fila['costo_receta'], 0, ',', '.') . "</td>
-                <td>$" . number_format($fila['precioVenta'], 0, ',', '.') . "</td>
-                <td>
-                    <a class='edit-icon' href='agregar_receta.php?id_producto={$fila['id_producto']}'>✏️</a>
-                </td>
-            </tr>";
-        }
-        ?>
+            <?php
+            if ($resultado->num_rows > 0) {
+                while ($fila = $resultado->fetch_assoc()) {
+                    echo "<tr>
+                        <td>{$fila['id_producto']}</td>
+                        <td>{$fila['nombre_producto']}</td>
+                        <td>$" . number_format($fila['costo_receta'], 0, ',', '.') . "</td>
+                        <td>$" . number_format($fila['precioVenta'], 0, ',', '.') . "</td>
+                        <td>
+                            <a class='edit-icon' href='agregar_receta.php?id_producto={$fila['id_producto']}'>✏️</a>
+                        </td>
+                    </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>No hay productos registrados.</td></tr>";
+            }
+            ?>
+
     </table>
 </body>
 </html>

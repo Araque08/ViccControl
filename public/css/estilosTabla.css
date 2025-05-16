@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container{
+    margin-top: 100px;
+}
+.container_formulario {
+    width: 70%;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+
+.form-section, .search-section {
+    margin-bottom: 20px;
+}
+
+.form-section input, .search-section input {
+    width: 30%;
+    padding: 8px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.form-section button {
+    width: 35%;
+    height: 30px;
+    padding: 10px;
+    background-color: #e7f308;
+    color: black;
+    border: none;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.container-button{
+    text-align: center;
+}
+
+#categoria{
+    width: 40%;
+    padding: 8px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.description{
+    display: block;
+    margin: 10px 5px;
+    min-width: 80%;
+    max-width: 100%;
+    min-height: 100px;
+    max-height: 200px;
+}
+
+.container_buscar {
+    width: 80%;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+table th {
+    background-color: #f2f2f2;
+}
+.action-buttons a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-size: 18px;
+    margin: 0 5px;
+}
