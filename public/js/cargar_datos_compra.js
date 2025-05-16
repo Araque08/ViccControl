@@ -13,7 +13,7 @@ document.getElementById('compra').addEventListener('change', function () {
     }
 
     if (compraId !== 'nada') {
-        fetch('/../../../controller/Modulos/compras_inventario/obtener_compra.php?id=' + compraId)
+        fetch('/../../controller/Modulos/compras_inventario/obtener_compra.php?id=' + compraId)
             .then(response => response.json())
             .then(data => {
                 if (data) {
