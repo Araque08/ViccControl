@@ -33,9 +33,9 @@ $materia_prima = $stmt_materia->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Receta</title>
-    <link rel="stylesheet" href="/../../../public/css/menu.css">
-    <link rel="stylesheet" href="/../../../public/css/compras_inventario.css">
-    <link rel="stylesheet" href="/../../../public/css/modal.css">
+    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
+    <link rel="stylesheet" href="/proyecto/public/css/compras_inventario.css">
+    <link rel="stylesheet" href="/proyecto/public/css/modal.css">
 
 </head>
 <body>
@@ -52,7 +52,7 @@ $materia_prima = $stmt_materia->get_result();
             </div>
         </div>
         <div class="logo">
-            <img src="/../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
 </div>
@@ -62,7 +62,7 @@ $materia_prima = $stmt_materia->get_result();
             <!-- Formulario para crear nueva materia prima -->
             <div class="form-section">
                 <h3>Crear nuevo producto</h3>
-                <form action="/../../../controller/Modulos/compras_inventario/guardar_materiaPrima.php" method="POST">
+                <form action="/proyecto/controller/Modulos/compras_inventario/guardar_materiaPrima.php" method="POST">
                     <input type="text" name="nombre" placeholder="Nombre" required>
                     <input type="number" name="precio" placeholder="Precio Venta $" required>
                     <!-- Categoría Dropdown o botón para agregar nueva categoría -->
@@ -136,6 +136,6 @@ $materia_prima = $stmt_materia->get_result();
         </div>
     </div>
 
-    <script src="../../../public/js/compras_inventario.js"></script>
+    <script src="/proyecto/public/js/compras_inventario.js"></script>
 </body>
 </html>
