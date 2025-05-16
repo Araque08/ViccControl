@@ -3,11 +3,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../../index.php");
+    header("Location: /proyecto/index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+include("/proyecto/conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -17,7 +17,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../../index.php?expirada=1");
+        header("Location: /proyecto/index.php?expirada=1");
         exit;
     }
 }
@@ -36,9 +36,9 @@ $result = $conexion->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Productos</title>
-    <link rel="stylesheet" href="/../../../public/css/menu.css">
-    <link rel="stylesheet" href="/../../../public/css/ventas.css">
-    <link rel="stylesheet" href="/../../../public/css/modal.css">
+    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
+    <link rel="stylesheet" href="/proyecto/public/css/ventas.css">
+    <link rel="stylesheet" href="/proyecto/public/css/modal.css">
 </head>
 <body>
 <div class="header-ventas">
@@ -54,7 +54,7 @@ $result = $conexion->query($sql);
             </div>
         </div>
         <div class="logo">
-            <img src="/../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
 </div>
@@ -73,7 +73,7 @@ $result = $conexion->query($sql);
                                     <i class="fa-solid fa-ellipsis-vertical" onclick="toggleMenu(' . $row['id_categoria'] . ')"></i>
                                         <div id="menu-' . $row['id_categoria'] . '" class="options-menu">
                                             <a href="editar_categoria.php?id=' . $row['id_categoria'] . '">Editar</a>
-                                            <a href="/../../../controller/Modulos/Ventas/eliminar_categoria.php?id=' . $row['id_categoria'] . '">Eliminar</a>
+                                            <a href="/proyecto/controller/Modulos/Ventas/eliminar_categoria.php?id=' . $row['id_categoria'] . '">Eliminar</a>
                                         </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ $result = $conexion->query($sql);
         <div class="products-container" id="products-container">
             <a href="#" onclick="mostrarCategoria()">
                 <div class="product">
-                    <img src="/../../../public/img/ModuloVentas/Products/añadir_categoria.png" alt="añadirCategoria">
+                    <img src="/proyecto/public/img/ModuloVentas/Products/añadir_categoria.png" alt="añadirCategoria">
                 </div>
             </a>
         </div>
@@ -99,6 +99,6 @@ $result = $conexion->query($sql);
         </div>
     </div>  
 </div>
-<script src="/../../../public/js/nueva_categoria_ventas.js"></script>
+<script src="/proyecto/public/js/nueva_categoria_ventas.js"></script>
 </body>
 </html>
