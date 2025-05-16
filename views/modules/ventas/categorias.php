@@ -3,11 +3,11 @@
 session_start();
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: /proyecto/index.php");
+    header("Location: ../../../index.php");
     exit;
 }
 
-include("/proyecto/conexionBD/conexion.php");
+include("../../../conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;
@@ -17,7 +17,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: /proyecto/index.php?expirada=1");
+        header("Location: ../../../index.php?expirada=1");
         exit;
     }
 }
