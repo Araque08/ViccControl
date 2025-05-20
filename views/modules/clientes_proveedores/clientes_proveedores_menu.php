@@ -133,16 +133,20 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <h2>Modulo de RRHH Y Nomina</h2>
     <div class="module-detail-cards">
         <div class="module-card">
-            <img src="../../../public/img/ModuloVentas/PuntoVenta.png" alt="Punto de venta">
+            <a href="#">
+            <img src="../../../public/img/ModuloClientesProveedores/Clientes.png" alt="Punto de venta">
             <div class="module-info">
-                <p>Punto de venta</p>
+                <p>Clientes</p>
             </div>
+            </a>
         </div>
         <div class="module-card">
-            <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+            <a href="proveedores.php">
+            <img src="../../../public/img/ModuloClientesProveedores/Proveedores.png" alt="Productos">
             <div class="module-info">
-                <p>Productos</p>
+                <p>Proveedores</p>
             </div>
+            </a>
         </div>
     </div>
 </div>

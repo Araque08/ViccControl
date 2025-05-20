@@ -226,6 +226,6 @@ $result_detalle = $stmt_detalle->get_result();
     text-align: center;
     ">
     </div>
-    <script src="/proyecto/public/js/cargar_datos_compra.js"></script>
+    <script src="/../../../public/js/cargar_datos_compra.js"></script>
 </body>
 </html>

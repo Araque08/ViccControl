@@ -12,61 +12,104 @@ if (!isset($_SESSION['Usuario'])) {
     header("Location: ../../index.php");
     exit;
 }
-
-
-// Obtener todos los productos y sumar el costo de sus recetas
-$sql = "
-SELECT 
-    p.id_producto, 
-    p.nombre_producto, 
+$_SESSION['id_categoria'] = $_GET['id_categoria'];
+$sql = "SELECT 
+    p.id_producto,
+    p.nombre_producto,
     p.Precio_venta,
-    IFNULL(SUM(r.cantidad * mp.Precio_venta), 0) AS costo_receta
+    c.nombre_categoria
 FROM Productos p
-LEFT JOIN Receta r ON p.id_producto = r.fk_id_producto
-LEFT JOIN MateriaPrima mp ON r.fk_id_materiaprima = mp.id_materiaPrima
-GROUP BY p.id_producto, p.nombre_producto, p.Precio_venta
-";
-$resultado = $conexion->query($sql);
+JOIN CategoriaProducto c ON p.fk_id_categoria = c.id_categoria
+WHERE c.fk_id_restaurante= ? and c.id_categoria= ?;";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("ii", $_SESSION['id_restaurante'], $_SESSION['id_categoria'] );
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+$nombre_categoria = 'Categoría'; // Valor por defecto
+
+
+if (isset($_GET['id_categoria'])) {
+    $id_categoria = intval($_GET['id_categoria']);
+    $sql = "SELECT nombre_categoria FROM CategoriaProducto WHERE id_categoria = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("i", $id_categoria);
+    $stmt->execute();
+    $stmt->bind_result($nombre_categoria);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Recetas Hamburguesas</title>
     <link rel="stylesheet" href="/../../../public/css/menu.css">
     <link rel="stylesheet" href="/../../../public/css/ventas.css">
     <link rel="stylesheet" href="/../../../public/css/modal.css">
 </head>
 <body>
-    <h1 style="text-align:center;">Recetas Hamburguesas</h1>
-    <table>
-        <tr>
-            <th>Cod</th>
-            <th>Nombre</th>
-            <th>Costo</th>
-            <th>Precio Venta</th>
-            <th>Acciones</th>
-        </tr>
 
-            <?php
-            if ($resultado->num_rows > 0) {
-                while ($fila = $resultado->fetch_assoc()) {
+<div class="header-ventas">
+    <div class="container-header">
+        <div class="compañia">
+            <div class="container-subModulo">
+                <div class="regresar">
+                    <a href="categorias.php">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+                <h1 class="nombre-pagina"><strong><?php echo htmlspecialchars($nombre_categoria); ?></strong></h1>
+
+            </div>
+        </div>
+        <div class="logo">
+            <img src="/../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+        </div>
+    </div>
+    <div class="container_buscar">
+        <div class="add_receta">
+            <a href="nueva_receta.php?id_categoria=<?php echo $_SESSION['id_categoria']; ?>">
+                <i class="fa-solid fa-square-plus"></i>
+            </a>
+        </div>
+        <table>
+            <tr>
+                <th>Cod</th>
+                <th>Nombre</th>
+                <th>Costo</th>
+                <th>Precio Venta</th>
+                <th>Acciones</th>
+            </tr>
+                <?php
+                if ($resultado->num_rows > 0) {
+                    while ($row = $resultado->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . $row['id_producto'] . "</td>
+                                <td>" . $row['nombre_producto'] . "</td>
+                                <td>$0.00</td> <!-- Costo vendrá después -->
+                                <td>$" . number_format($row['Precio_venta'], 2) . "</td>
+                                <td>
+                                    <a href='nueva_receta.php?id=" . $row['id_producto'] . "'>✏️</a>
+                                    <a href='eliminar_producto.php?id=" . $row['id_producto'] . "'>🗑️</a>
+                                </td>
+                            </tr>";
+                    }
+                } else {
                     echo "<tr>
-                        <td>{$fila['id_producto']}</td>
-                        <td>{$fila['nombre_producto']}</td>
-                        <td>$" . number_format($fila['costo_receta'], 0, ',', '.') . "</td>
-                        <td>$" . number_format($fila['precioVenta'], 0, ',', '.') . "</td>
-                        <td>
-                            <a class='edit-icon' href='agregar_receta.php?id_producto={$fila['id_producto']}'>✏️</a>
-                        </td>
-                    </tr>";
+                            <td colspan='5' style='text-align: center;'>No hay productos registrados.</td>
+                        </tr>";
                 }
-            } else {
-                echo "<tr><td colspan='5'>No hay productos registrados.</td></tr>";
-            }
-            ?>
-
-    </table>
+                ?>
+        </table>
+    </div>
+</div>
 </body>
 </html>

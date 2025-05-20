@@ -106,7 +106,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
 
     <?php if (in_array('compras_inventario', $modulos_activos)): ?>
         <div class="module-card">
-            <a href="../../views/modules/compras_inventario/compras_inventario.php">
+            <a href="../../views/modules/compras_inventario/compras_inventario_menu.php">
                 <img src="../../public/img/Modulos/ModuloComprasInventario.png" alt="Módulo de compras e Inventario">
                 <div class="module-info"><p>Modulo de compras e Inventario</p></div>
             </a>

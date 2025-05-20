@@ -3,17 +3,26 @@
 session_start();
 include("../../../conexionBD/conexion.php");
 
-$id_producto = $_GET['id_producto'];
 
 // Consulta 1: Ingredientes ya asignados a la receta
-$sql_receta = "SELECT mp.nombre_materia_prima, r.cantidad, r.precio_unitario 
-            FROM Receta r
-            JOIN MateriaPrima mp ON r.fk_id_materia_prima = mp.id_materia_prima
-            WHERE r.fk_id_producto = ?";
+$id_producto = $_GET['id'];
+
+$sql_receta = "SELECT 
+    mp.id_materia_prima,
+    mp.nombre_materia_prima,
+    mp.stock_disp AS existencia,
+    mp.unidad_materia_prima AS Unidad,
+    r.cantidad,
+    r.precio_unitario,
+    (r.cantidad * r.precio_unitario) AS Costo_receta
+FROM Receta r
+JOIN MateriaPrima mp ON r.fk_id_materia_prima = mp.id_materia_prima
+WHERE r.fk_id_producto = ?";
 $stmt_receta = $conexion->prepare($sql_receta);
 $stmt_receta->bind_param("i", $id_producto);
 $stmt_receta->execute();
 $resultado_receta = $stmt_receta->get_result();
+
 
 // Consulta 2: Materias primas disponibles del restaurante
 $sql_ingredientes = "SELECT * FROM MateriaPrima WHERE fk_id_restaurante = ?";
@@ -21,6 +30,7 @@ $stmt_materia = $conexion->prepare($sql_ingredientes);
 $stmt_materia->bind_param("i", $_SESSION['id_restaurante']);
 $stmt_materia->execute();
 $materia_prima = $stmt_materia->get_result();
+
 ?>
 
 
@@ -33,9 +43,9 @@ $materia_prima = $stmt_materia->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Receta</title>
-    <link rel="stylesheet" href="/proyecto/public/css/menu.css">
-    <link rel="stylesheet" href="/proyecto/public/css/compras_inventario.css">
-    <link rel="stylesheet" href="/proyecto/public/css/modal.css">
+    <link rel="stylesheet" href="/../../../public/css/menu.css">
+    <link rel="stylesheet" href="/../../../public/css/ventas.css">
+    <link rel="stylesheet" href="/../../../public/css/modal.css">
 
 </head>
 <body>
@@ -44,7 +54,7 @@ $materia_prima = $stmt_materia->get_result();
         <div class="compañia">
             <div class="container-subModulo">
                 <div class="regresar">
-                    <a href="categorias.php">
+                    <a href="ver_categoria.php?id_categoria=<?php echo $_SESSION['id_categoria']; ?>">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </div>
@@ -52,42 +62,47 @@ $materia_prima = $stmt_materia->get_result();
             </div>
         </div>
         <div class="logo">
-            <img src="/proyecto/public/img/ViccControlImg.png" alt="logo de la compañia">
+            <img src="/../../../public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
 </div>
     <div class="container">
         <div class="container_formulario">
-            
             <!-- Formulario para crear nueva materia prima -->
             <div class="form-section">
-                <h3>Crear nuevo producto</h3>
-                <form action="/proyecto/controller/Modulos/compras_inventario/guardar_materiaPrima.php" method="POST">
-                    <input type="text" name="nombre" placeholder="Nombre" required>
-                    <input type="number" name="precio" placeholder="Precio Venta $" required>
-                    <!-- Categoría Dropdown o botón para agregar nueva categoría -->
-                    <div>
-                        <select name="materia_prima[]" id="categoria" required>
-                            <option value="">Seleccionar Producto</option>
-                            <?php 
-                            // Mostrar en el <select> las materias primas
-                            if ($materia_prima->num_rows > 0) {
-                                while ($row = $materia_prima->fetch_assoc()) {
-                                    echo '<option value="' . $row['id_materia_prima'] . '">' . $row['nombre_materia_prima'] . '</option>';
+                    <form action="/../../../controller/Modulos/ventas/agregar_nueva_receta.php" method="POST"  enctype="multipart/form-data">
+                        <h3>Crear nuevo producto</h3>
+                        <input type="hidden" name="id_categoria" value="<?= htmlspecialchars($_SESSION['id_categoria']) ?>">
+
+                        <input type="text" name="nombre" placeholder="Nombre" id="nombre" required>
+                        <input type="number" name="precio" placeholder="Precio Venta $" id="precio" required>
+                        <!-- Categoría Dropdown o botón para agregar nueva categoría -->
+                        <div>
+                            <select name="materia_prima[]" id="categoria" required>
+                                <option value="">Seleccionar Producto</option>
+                                <?php 
+                                // Mostrar en el <select> las materias primas
+                                if ($materia_prima->num_rows > 0) {
+                                    while ($row = $materia_prima->fetch_assoc()) {
+                                        echo '<option value="' . $row['id_materia_prima'] . '">' . $row['nombre_materia_prima'] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay materias primas disponibles</option>';
                                 }
-                            } else {
-                                echo '<option value="">No hay materias primas disponibles</option>';
-                            }
-                            ?>
-                            ?>
-                        </select>
-                    </div>
-                    <input type="number" name="cantidad" placeholder="Cantidad" require>
-                    <div class="container-button">
-                        <button type="submit">Crear</button>
-                    </div>
-                    
-                </form>
+                                ?>
+                            </select>
+                        </div>
+
+                        <input type="number" name="cantidad[]" placeholder="Cantidad" require>
+                        <input type="file" name="imagen_producto" accept="image/*">
+
+                        <div class="container-button">
+                            <button type="submit">Crear</button>
+                        </div>
+                    </form>
+            </div>
+            <div class="imagen_receta">
+                <div id="imagen_producto" class="imagen_producto"></div>
             </div>
         </div>
         
@@ -105,25 +120,35 @@ $materia_prima = $stmt_materia->get_result();
                     <tr>
                         <th>Cod</th>
                         <th>Nombre de Ingrediente</th>
+                        <th>Existencia</th>
                         <th>Cantidad</th>
                         <th>Costo en Receta</th>
+                        <th>Unidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $resultado_receta->fetch_assoc()) { ?>
+                    <?php if ($resultado_receta->num_rows > 0): ?>
+                        <?php while ($row = $resultado_receta->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?= $row['id_materia_prima'] ?></td>
+                                <td><?= $row['nombre_materia_prima'] ?></td>
+                                <td><?= $row['existencia'] ?></td>
+                                <td><?= $row['cantidad'] ?></td>
+                                <td>$<?= number_format($row['Costo_receta'], 2) ?></td>
+                                <td><?= $row['Unidad'] ?></td>
+                                <td>
+                                    <a href="#">✏️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    <?php else: ?>
                         <tr>
-                            <td><?php echo $row['id_materia_prima']; ?></td>
-                            <td><?php echo $row['nombre_materia_prima']; ?></td>
-                            <td><?php echo $row['cantidad']; ?></td>
-                            <td><?php echo '$' . number_format($row['cantidad'] * $row['precio_unitario'], 2); ?></td>
-                            <td>
-                                <a href="#">✏️</a> <!-- Editar -->
-                                <a href="#">🗑️</a> <!-- Eliminar -->
-                            </td>
+                            <td colspan="7" style="text-align: center;">No hay ingredientes en esta receta.</td>
                         </tr>
-                    <?php } 
-                    ?>
+                    <?php endif; ?>
+
                 </tbody>
             </table>
         </div>
@@ -136,6 +161,35 @@ $materia_prima = $stmt_materia->get_result();
         </div>
     </div>
 
-    <script src="/proyecto/public/js/compras_inventario.js"></script>
+    <script src="/../../../public/js/compras_inventario.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idProducto = urlParams.get("id");
+
+            if (idProducto) {
+                fetch(`/../../../controller/Modulos/ventas/obtener_producto.php?id=${idProducto}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            // Llenar inputs
+                            document.getElementById('nombre').value = data.nombre_producto;
+                            document.getElementById('precio').value = data.Precio_venta;
+
+                            // Imagen actual
+                            if (data.imagen_producto) {
+                                const imagenPreview = document.createElement("p");
+                                imagenPreview.innerHTML = '<img src="/../../../public/img/' + data.imagen_producto + '" width="200">';
+                                const fileInput = document.getElementById("imagen_producto");
+                                fileInput.parentNode.insertBefore(imagenPreview, fileInput);
+                            }
+
+                            // Si quieres manejar materias primas también puedes añadir inputs aquí
+                        }
+                    })
+                    .catch(error => console.error("Error al obtener el producto:", error));
+            }
+        });
+    </script>
 </body>
 </html>

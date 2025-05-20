@@ -29,7 +29,7 @@ body {
     font-size: 16px;
     border-radius: 10px;
 }
-.form-section button {
+.form-section button, .guardar_inventario {
     width: 35%;
     height: 30px;
     padding: 10px;
@@ -89,6 +89,24 @@ table th {
     margin: 0 5px;
 }
 
+.stock-input{
+    width: 80px;
+}
 
+.form_inventario{
+    display: flex;
+}
 
+.divider{
+    margin: 15px;
+}
+
+.calendario{
+    width: 30%;
+}
+
+.tabla{
+    width: 70%;
+    text-align: center;
+}
 

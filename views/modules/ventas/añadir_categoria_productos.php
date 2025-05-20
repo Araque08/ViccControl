@@ -21,6 +21,5 @@
             <button class="add-category" type="submit">Agregar</button>
         </form>
     </div>
-    <script src="/../../../public/js/ventas/categoria_producto.js"></script>
 </body>
 </html>

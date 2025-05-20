@@ -2,6 +2,10 @@ body{
     display: block;
 }
 
+a{
+    text-decoration: none;
+}
+
 .productos{
     display: block;
 }
@@ -16,11 +20,6 @@ body{
     justify-content: flex-start;
     align-items: flex-start;
     padding: 40px;
-}
-
-.products-container{
-    margin: 30px;
-    position: relative;
 }
 
 .titulo-productos{
@@ -98,7 +97,6 @@ body{
 .options-menu a {
     display: block;
     padding: 5px;
-    text-decoration: none;
     color: black;
     margin-bottom: 5px;
 }
@@ -116,6 +114,7 @@ body{
 /* Tabla para receta*/
 
 .container_buscar {
+    position: relative;
     width: 80%;
     margin: 30px auto;
     background-color: #fff;
@@ -137,8 +136,118 @@ table th {
     background-color: #f2f2f2;
 }
 .action-buttons a {
-    text-decoration: none;
     color: #4CAF50;
     font-size: 18px;
     margin: 0 5px;
+}
+
+.add_receta{
+    position: relative;
+    width: 100%;
+    height: 30px;
+}
+
+.add_receta i{
+    position: absolute;
+    left: 92%;
+    top: 70%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: black;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+/*Categorias*/
+
+
+.product{
+    position: relative;
+    text-decoration: none;
+}
+
+.product i{
+    position: absolute;
+    left: 250px;
+    top: 95%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: black;
+}
+
+.product p{
+    color: black;
+    margin: 8px 10px;
+}
+
+.products-container{
+    margin: 15px;
+    position: relative;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+
+/*recetas*/
+
+.container{
+    margin-top: 100px;
+}
+.container_formulario {
+    display: flex;
+    width: 50%;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.form-section{
+    width: 60%;
+}
+
+
+
+.imagen_receta{
+    width: auto;
+    height: auto;
+    margin: auto auto;
+}
+
+
+.form-section, .search-section {
+    margin-bottom: 20px;
+}
+
+.form-section input, .search-section input {
+    width: 35%;
+    padding: 8px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.form-section button, .guardar_inventario {
+    width: 35%;
+    height: 30px;
+    padding: 10px;
+    background-color: #e7f308;
+    color: black;
+    border: none;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.container-button{
+    text-align: center;
+}
+
+#categoria{
+    width: 30%;
+    padding: 8px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 10px;
 }

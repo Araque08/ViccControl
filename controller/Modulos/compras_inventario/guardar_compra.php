@@ -48,19 +48,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (?, ?, ?, ?)";
     $stmt_detalle = $conexion->prepare($sql_detalle);
 
+    // 🔄 4️⃣ Actualizar stock disponible
+    $sql_update_stock = "UPDATE MateriaPrima SET stock_disp = stock_disp + ? WHERE id_materia_prima = ?";
+    $stmt_stock = $conexion->prepare($sql_update_stock);
+
     for ($i = 0; $i < count($productos); $i++) {
         $producto_id = $productos[$i];
         $cantidad = $cantidades[$i];
         $precio = $precios[$i];
 
+        // Guardar detalle
         $stmt_detalle->bind_param("iiid", $numero_factura, $producto_id, $cantidad, $precio);
         $stmt_detalle->execute();
+
+        // Actualizar stock
+        $stmt_stock->bind_param("ii", $cantidad, $producto_id);
+        $stmt_stock->execute();
     }
 
     $stmt_detalle->close();
+    $stmt_stock->close();
     $conexion->close();
 
-    // 4️⃣ Redirigir después de guardar
+    // Redirigir después de guardar
     header("Location: ../../../views/modules/compras_inventario/compras.php");
     exit;
 

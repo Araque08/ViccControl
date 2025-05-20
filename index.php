@@ -12,6 +12,10 @@ if (isset($_SESSION['ruta_inicio'])) {
 include("views/auth/form_inicio.php");
 ?>
 
+<?php if (isset($_GET['expirada']) && $_GET['expirada'] == 1): ?>
+    <div class="alerta">⚠️ Tu sesión ha expirado por inactividad.</div>
+<?php endif; ?>
+
 <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
     <div class="alerta-error">
         ⚠️ Usuario, contraseña o restaurante incorrectos.
