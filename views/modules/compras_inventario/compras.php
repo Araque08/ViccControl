@@ -173,7 +173,7 @@ $result_detalle = $stmt_detalle->get_result();
                             <button type="button">+ Materia Prima</button>
                         </a>
                     </div>
-                    <input type="number" name="cantidad[]" placeholder="Cantidad" required>
+                    <input type="number" name="cantidad[]" placeholder="Cantidad" required step="any">
                     <input type="number" name="precio_neto[]" placeholder="Precio Neto" required>
                     <div class="container-button">
                         <button type="submit">Crear</button>

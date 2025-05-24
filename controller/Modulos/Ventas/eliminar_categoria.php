@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         // Ejecutar la consulta
         if ($stmt->execute()) {
             // Si la categoría fue eliminada correctamente, redirigir al listado de categorías
-            header("Location: productos.php?mensaje=Categoria eliminada con éxito");
+            header("Location: ../../../views/modules/ventas/categorias.php?editado=2");
         } else {
             // Si hubo un error al eliminar
             echo "❌ Error al eliminar la categoría.";

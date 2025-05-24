@@ -169,7 +169,5 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
 <script src="../../../public/js/modal_cliente.js"></script>
 
 
-
-
 </body>
 </html>

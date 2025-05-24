@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $unidad = $_POST['unidad'];
     $categoria = $_POST['categoria'];
     $stock_min = $_POST['stock_min'];
+    $estado = $_POST['estado'];
     $descripcion = $_POST['descripcion'];
 
     // Obtener el ID del restaurante desde la sesión
@@ -41,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Insertar la materia prima en la base de datos
-    $sql = "INSERT INTO MateriaPrima (nombre_materia_prima, unidad_materia_prima, fk_id_categoria_materia, stock_min, descripcion_materia_prima, fk_id_restaurante) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO MateriaPrima (nombre_materia_prima, unidad_materia_prima, fk_id_categoria_materia, stock_min, descripcion_materia_prima, fk_id_restaurante, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("sssssi", $nombre, $unidad, $categoria, $stock_min, $descripcion, $restaurante_id);
+    $stmt->bind_param("sssssis", $nombre, $unidad, $categoria, $stock_min, $descripcion, $restaurante_id, $estado);
 
     if ($stmt->execute()) {
         header("Location: ../../../views/modules/compras_inventario/materia_prima.php");

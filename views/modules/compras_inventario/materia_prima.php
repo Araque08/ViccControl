@@ -28,7 +28,7 @@ $id_restaurante = $_SESSION['id_restaurante'];
 
 // Consulta para obtener las materias primas del restaurante
 $sql_materia_prima = "SELECT mp.id_materia_prima, mp.nombre_materia_prima, mp.unidad_materia_prima, 
-                            cm.nombre_categoria_materia, mp.stock_min, mp.descripcion_materia_prima 
+                            cm.nombre_categoria_materia, mp.stock_min, mp.descripcion_materia_prima, mp.estado 
                         FROM MateriaPrima mp
                         JOIN CategoriaMateriaPrima cm ON mp.fk_id_categoria_materia = cm.id_categoria_materia
                         WHERE mp.fk_id_restaurante = ?";
@@ -76,6 +76,23 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
         </div>
     </div>
 <!--Formulario compras -->
+    <?php if (isset($_GET['editado']) && $_GET['editado'] == 1): ?>
+        <div class="alert-success">Proveedor actualizado correctamente.</div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['eliminado']) && $_GET['eliminado'] == 1): ?>
+    <div class="alert-success">Materia Prima eliminada correctamente.</div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <div class="alert-error">
+            <?php
+                if ($_GET['error'] == 'campos') {
+                    echo "No se puede eliminar la materia prima porque esta asociada a compras.";
+                } else {
+                    echo "Error al eliminar la materia prima.";
+                }
+            ?>
+        </div>
+    <?php endif; ?>
 
     <div class="container">
         <div class="container_formulario">
@@ -98,7 +115,13 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
                         </select>
                         <button onclick=" mostrarNuevaCategoria(<?= $_SESSION['id_restaurante'] ?>)">+ Categoría</button>
                     </div>
-                    <input type="number" name="stock_min" placeholder="Stock mínimo" require>
+                    <input type="number" name="stock_min" placeholder="Stock mínimo" required step="any">
+                    <div>
+                        <select name="estado" id="estado" required>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
                     <textarea class="description" name="descripcion" placeholder="Descripción" rows="4" ></textarea>
                     <div class="container-button">
                         <button type="submit">Crear</button>
@@ -126,6 +149,7 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
                         <th>Categoría</th>
                         <th>Stock min</th>
                         <th>Descripción</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -141,9 +165,9 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
                                 <td>" . $row['nombre_categoria_materia'] . "</td>
                                 <td>" . $row['stock_min'] . "</td>
                                 <td>" . $row['descripcion_materia_prima'] . "</td>
+                                <td>" . $row['estado'] . "</td>
                                 <td>
-                                    <a href='editar_materia.php?id=" . $row['id_materia_prima'] . "'>✏️</a>
-                                    <a href='eliminar_materia.php?id=" . $row['id_materia_prima'] . "'>🗑️</a>
+                                    <button onclick=\"mostrarModal(" . $row['id_materia_prima'] . ")\">✏️</button>
                                 </td>
                             </tr>";}
                     ?>
@@ -159,7 +183,15 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
             <div id="contenidoNuevaCategoria"></div>
         </div>
     </div>
+    <!-- Modal para editar materia prima -->
+    <div id="nuevoModal" class="modal">
+        <div class="modal-content">
+            <span class="cerrar-modal">&times;</span>
+            <div id="contenidoModal"></div>
+        </div>
+    </div>
 
     <script src="../../../public/js/compras_inventario.js"></script>
+    <script src="../../../public/js/editar_materia.js" ></script>
 </body>
 </html>

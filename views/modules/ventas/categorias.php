@@ -60,6 +60,28 @@ $result = $conexion->query($sql);
 </div>
 <div class="productos">
 
+    <?php if (isset($_GET['editado']) && $_GET['editado'] == 2): ?>
+        <div class="alert-success">Categoria Eliminada Correctamente.</div>
+    <?php endif; ?>
+    <?php if (isset($_GET['guardado']) && $_GET['guardado'] == 1): ?>
+        <div class="alert-success">Categoria creada Correctamente.</div>
+    <?php endif; ?>
+    <?php if (isset($_GET['editado'])): ?>
+    <div class="alert-success">Categoría actualizada correctamente.</div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <div class="alert-error">
+            <?php
+            switch ($_GET['error']) {
+                case 'id_faltante': echo "ID de categoría no válido."; break;
+                case 'imagen_error': echo "Error al subir la imagen."; break;
+                case 'actualizar': echo "Error al actualizar la categoría."; break;
+                default: echo "Error desconocido."; break;
+            }
+            ?>
+        </div>
+    <?php endif; ?>
+
+
     <div class="container-productos">
 
         <?php
@@ -71,7 +93,7 @@ $result = $conexion->query($sql);
                                 <p>' . $row['nombre_categoria'] . '</p>
                                 <div class="menu-dots">
                                         <div id="menu-' . $row['id_categoria'] . '" class="options-menu">
-                                            <a href="editar_categoria.php?id=' . $row['id_categoria'] . '">Editar</a>
+                                            <a href="javascript:void(0)" onclick="mostrarEdicion(' . $row['id_categoria'] . ')">Editar</a>                   
                                             <a href="/../../../controller/Modulos/Ventas/eliminar_categoria.php?id=' . $row['id_categoria'] . '">Eliminar</a>
                                         </div>
                                 </div>
@@ -94,6 +116,12 @@ $result = $conexion->query($sql);
         <div class="modal-content">
             <span class="cerrar-modal">&times;</span>
             <div id="contenidoCategoria"></div>
+        </div>
+    </div>  
+    <div id="editarModal" class="modal">
+        <div class="modal-content">
+            <span class="cerrar-modal">&times;</span>
+            <div id="contenidoEditar"></div>
         </div>
     </div>  
 </div>

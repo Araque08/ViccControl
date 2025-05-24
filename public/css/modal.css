@@ -28,3 +28,33 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    margin: 10px auto;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    font-weight: 600;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px 20px;
+    margin: 10px auto;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    font-weight: 600;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    opacity: 1;
+}
+

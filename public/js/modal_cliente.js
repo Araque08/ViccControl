@@ -4,8 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const cerrarModal = document.getElementById('cerrar-modal');
   const formCliente = document.getElementById('form-cliente');
 
+  function parseValor(valor) {
+  if (!valor) return 0;
+  return parseFloat(valor.replace(/\$/g, '').replace(/\./g, '').replace(',', '.')) || 0;
+}
+
+
   btnGenerarFactura.addEventListener('click', (e) => {
     e.preventDefault();
+
+    
 
     // Verifica que haya productos en la factura
     const filas = document.querySelectorAll("#tabla-factura tbody tr");
@@ -53,12 +61,59 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Ocultar modal
-    modalCliente.style.display = 'none';
-
+    
     // Obtener datos factura y totales
     const productos = obtenerDatosFactura();
     const totales = obtenerTotales();
+
+    const parseValor = str => parseFloat(str.replace(/[^\d.-]/g, '').replace(',', '.')) || 0;
+
+
+
+    const payload = {
+      nombre_cliente: clienteData.nombre,
+      telefono_cliente: clienteData.telefono,
+      direccion_cliente: clienteData.direccion,
+      email_cliente: clienteData.email,
+      ipm: parseFloat(totales.igv.replace(/[$.]/g, '').replace(',', '.')), // convertir a número limpio
+      medio_pago:parseInt(document.querySelector('#medio-pago').value), // que sea el id o nombre del medio pago seleccionado, NO null
+      productos: productos, // enviarlo como array, no string
+      total: parseFloat(totales.total.replace(/[$.]/g, '').replace(',', '.'))
+    };
+
+
+    // Enviar con fetch a transaccion_real.php
+    fetch('../../../controller/Modulos/Ventas/procesar_pago.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        console.log('Venta registrada con ID:', data.venta_id);
+        // Aquí sí generas la ventana factura después de que todo se guarde bien
+        const ventanaFactura = window.open('', '_blank', 'width=800,height=600');
+        ventanaFactura.document.write(facturaHTML);
+        ventanaFactura.document.close();
+      } else {
+        alert("Error registrando la venta: " + data.message);
+      }
+    })
+    .catch(error => {
+  console.error("❌ Error en la transacción:", error);
+  alert("Ocurrió un error al registrar la factura.");
+
+  // Prueba también imprimir el payload que envías
+  console.log("📦 Payload enviado:", payload);
+});
+
+
+    // Ocultar modal
+    modalCliente.style.display = 'none';
+
 
     // Generar factura en nueva ventana
     const facturaHTML = `
@@ -141,4 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
       total: document.getElementById("total").textContent
     };
   }
+
+
 });

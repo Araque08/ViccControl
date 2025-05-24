@@ -51,6 +51,7 @@ $proveedores_result = $stmt->get_result();
     <title>Modulo de Control</title>
     <link rel="stylesheet" href="../../../public/css/menu.css">
     <link rel="stylesheet" href="../../../public/css/compras_inventario.css">
+    <link rel="stylesheet" href="../../../public/css/modal.css">
 </head>
 <body>
 <div class="header-ventas">
@@ -70,6 +71,24 @@ $proveedores_result = $stmt->get_result();
         </div>
     </div>
 <!--Formulario compras -->
+    <?php if (isset($_GET['editado']) && $_GET['editado'] == 1): ?>
+        <div class="alert-success">Proveedor actualizado correctamente.</div>
+    <?php endif; ?>
+    
+    <?php if (isset($_GET['eliminado']) && $_GET['eliminado'] == 1): ?>
+    <div class="alert-success">Proveedor eliminado correctamente.</div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <div class="alert-error">
+            <?php
+                if ($_GET['error'] == 'compras_asociadas') {
+                    echo "No se puede eliminar el proveedor porque tiene compras asociadas.";
+                } else {
+                    echo "Error al eliminar el proveedor.";
+                }
+            ?>
+        </div>
+    <?php endif; ?>
+
 
     <div class="container">
         <div class="container_formulario">
@@ -129,8 +148,8 @@ $proveedores_result = $stmt->get_result();
                                 <td>" . $row['email_proveedor'] . "</td>
                                 <td>" . $row['ciudad'] . "</td>
                                 <td>
-                                    <a href='editar_proveedor.php?id=" . $row['id_proveedor'] . "'>✏️</a>
-                                    <a href='eliminar_proveedor.php?id=" . $row['id_proveedor'] . "' onclick=\"return confirm('¿Estás seguro de eliminar este proveedor?')\">🗑️</a>
+                                    <button onclick=\"mostrarModal(" . $row['id_proveedor'] . ")\">✏️</button>
+                                    <a href='../../../controller/Modulos/clientes_proveedores/eliminar_proveedor.php?id=" . $row['id_proveedor'] . "' onclick=\"return confirm('¿Estás seguro de eliminar este proveedor?')\">🗑️</a>
                                 </td>
                             </tr>";
                     }
@@ -139,6 +158,13 @@ $proveedores_result = $stmt->get_result();
             </table>
         </div>  
     </div>
-    <script src="/../../../public/js/cargar_datos_compra.js"></script>
+    <div id="nuevoModal" class="modal">
+        <div class="modal-content">
+            <span class="cerrar-modal">&times;</span>
+            <div id="contenidoModal"></div>
+        </div>
+    </div>
+
+    <script src="/../../../public/js/editar_proveedor.js"></script>
 </body>
 </html>

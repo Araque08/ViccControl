@@ -1,40 +1,52 @@
 <?php
-// Inicia la sesión para obtener las variables necesarias
 session_start();
-include("../../../conexionBD/conexion.php"); // Conexión a la base de datos
+include("../../../conexionBD/conexion.php");
 
-// Verifica si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recibe los datos del formulario
-    $categoryName = $_POST['categoryName'];
-    $categoryImage = $_FILES['categoryImage'];
+    // Validación: asegurarse de que viene el ID
+    if (!isset($_POST['id_categoria']) || !is_numeric($_POST['id_categoria'])) {
+        header("Location: /../../../views/modules/ventas/categorias.php?error=id_faltante");
+        exit;
+    }
 
-    // Verifica si la imagen se ha cargado correctamente
+    $id_categoria = intval($_POST['id_categoria']);
+    $categoryName = trim($_POST['categoryName']);
+    $categoryImage = $_FILES['categoryImage'];
+    $updateImage = false;
+
+    // Verificar si se subió una nueva imagen
     if ($categoryImage['error'] === UPLOAD_ERR_OK) {
-        // Define el directorio donde se guardará la imagen
         $uploadDir = "../../../public/img/ModuloVentas/Products/category/";
         $uploadFile = $uploadDir . basename($categoryImage['name']);
 
-        // Mueve la imagen cargada al directorio de destino
         if (move_uploaded_file($categoryImage['tmp_name'], $uploadFile)) {
-            // Inserta la nueva categoría en la base de datos
-            $sql = "INSERT INTO CategoriaProducto (nombre_categoria, imagen_categoria) VALUES (?, ?)";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ss", $categoryName, $uploadFile);
-
-            if ($stmt->execute()) {
-                header("Location: /../../../views/modules/ventas/productos.php");
-            } else {
-                echo "Error al agregar la categoría: " . $stmt->error;
-            }
-
-            // Cierra la conexión
-            $stmt->close();
+            $updateImage = true;
         } else {
-            echo "Error al cargar la imagen.";
+            header("Location: /../../../views/modules/ventas/categorias.php?error=imagen_error");
+            exit;
         }
-    } else {
-        echo "No se cargó ninguna imagen o hubo un error al cargarla.";
     }
+
+    // Actualizar categoría (con o sin imagen)
+    if ($updateImage) {
+        $sql = "UPDATE CategoriaProducto SET nombre_categoria = ?, imagen_categoria = ? WHERE id_categoria = ?";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param("ssi", $categoryName, $uploadFile, $id_categoria);
+    } else {
+        $sql = "UPDATE CategoriaProducto SET nombre_categoria = ? WHERE id_categoria = ?";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param("si", $categoryName, $id_categoria);
+    }
+
+    if ($stmt->execute()) {
+        header("Location: /../../../views/modules/ventas/categorias.php?editado=1");
+        exit;
+    } else {
+        header("Location: /../../../views/modules/ventas/categorias.php?error=actualizar");
+        exit;
+    }
+
+    $stmt->close();
 }
 ?>
+
