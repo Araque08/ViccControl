@@ -1,10 +1,15 @@
 <?php
 session_start();
+file_put_contents("log_sesion.txt", print_r($_SESSION, true));
+
 
 if (!isset($_SESSION['Usuario'])) {
     header("Location: ../../../index.php");
     exit;
 }
+
+$_SESSION['id_empleado'] = $fila['id_empleado']; // <-- cuando el login es exitoso
+
 
 include("../../../conexionBD/conexion.php");
 

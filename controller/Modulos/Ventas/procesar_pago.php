@@ -1,85 +1,103 @@
 <?php
-// transaccion_real.php
-include '../../../conexion/conexion.php';
+// 🔧 Configuración de cabecera y errores
+ob_clean();
+header('Content-Type: application/json');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('html_errors', 0);
+error_reporting(E_ALL);
+
+// 📦 Iniciar sesión y conexión
 session_start();
 
-// Recibe y decodifica JSON
+$conexionPath = realpath('../../../conexionBD/conexion.php');
+if (!file_exists($conexionPath)) {
+    echo json_encode(['status' => 'error', 'message' => 'No se encontró el archivo de conexión']);
+    exit;
+}
+include $conexionPath;
+
+// 📥 Recibir JSON y decodificar
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-
-// $data['productos'] ahora será un array directamente
 
 if (!$data) {
     echo json_encode(['status' => 'error', 'message' => 'JSON inválido']);
     exit;
 }
 
-// Accede a los datos, ejemplo:
-$nombreCliente = $data['nombre_cliente'];
-$productos = $data['productos']; // array con productos
-
-// Puedes convertir cadenas monetarias si es necesario:
-$ipm = floatval(str_replace(['$', '.', ','], ['', '', '.'], $data['ipm']));
-$total = floatval(str_replace(['$', '.', ','], ['', '', '.'], $data['total']));
-
-// Implementa aquí la transacción ACID y las inserciones en la BD
-
-// Al final:
-echo json_encode(['status' => 'success', 'venta_id' => $idVentaGenerada]);
-exit;
-
-
+// 🧍‍♂️ Verificar sesión
+if (!isset($_SESSION['id_usuario'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Sesión de empleado no definida']);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conexion->begin_transaction();
 
     try {
-        // Datos del cliente desde el formulario
-        $nombre = trim($_POST['nombre_cliente']);
-        $telefono = trim($_POST['telefono_cliente']);
-        $direccion = trim($_POST['direccion_cliente']);
-        $email = trim($_POST['email_cliente']);
-        $medioPago = (int) $_POST['medio_pago'];
-        $subtotal = (float) $_POST['subtotal'];
-        $ipm = (float) $_POST['ipm'];
-        $total = (float) $_POST['total'];
-        $productos = json_decode($_POST['productos'], true);
-        $idEmpleado = $_SESSION['id_empleado'];
+        // 📋 Datos recibidos
+        $nombre      = $data['nombre_cliente'];
+        $telefono    = $data['telefono_cliente'];
+        $direccion   = $data['direccion_cliente'] ?? '';
+        $email       = $data['email_cliente'] ?? '';
+        $medioPago   = $data['medio_pago'];
+        $subtotal    = floatval($data['subtotal'] ?? 0);
+        $ipm         = floatval($data['ipm'] ?? 0);
+        $total       = floatval($data['total'] ?? 0);
+        $productos   = $data['productos'] ?? [];
+        $idEmpleado  = $_SESSION['id_usuario'];
 
         if (empty($nombre) || empty($telefono) || empty($productos)) {
-            throw new Exception("Datos obligatorios faltantes");
+            throw new Exception("Faltan datos obligatorios");
         }
 
-        // 1. Insertar cliente si no existe (puedes cambiar por verificación previa)
-        $stmt = $conexion->prepare("INSERT INTO Cliente (nombre_cliente, telefono_cliente, direccion_cliente, correo_cliente) VALUES (?, ?, ?, ?)");
+        // 1️⃣ Insertar cliente
+        $stmt = $conexion->prepare("INSERT INTO Cliente (nombre_cliente, telefono_cliente, direccion_cliente, email_cliente) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $nombre, $telefono, $direccion, $email);
         $stmt->execute();
         $idCliente = $stmt->insert_id;
+        $stmt->close();
 
-        // 2. Insertar venta
+        // 2️⃣ Insertar venta
         $stmt = $conexion->prepare("INSERT INTO Venta (fk_id_cliente, fk_id_empleado, fecha, total_venta) VALUES (?, ?, CURDATE(), ?)");
         $stmt->bind_param("iid", $idCliente, $idEmpleado, $total);
         $stmt->execute();
         $idVenta = $stmt->insert_id;
+        $stmt->close();
 
-        // 3. Insertar medio de pago
+        // 3️⃣ Insertar método de pago
         $stmt = $conexion->prepare("INSERT INTO Venta_MedioPago (fk_id_venta, fk_id_medio_pago, monto) VALUES (?, ?, ?)");
         $stmt->bind_param("iid", $idVenta, $medioPago, $total);
         $stmt->execute();
+        $stmt->close();
 
-        // 4. Insertar factura
+        // 4️⃣ Insertar factura
         $stmt = $conexion->prepare("INSERT INTO Factura (fk_id_venta, subtotal, impuestos_factura, valor_factura) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("iddd", $idVenta, $subtotal, $ipm, $total);
         $stmt->execute();
+        $stmt->close();
 
-        // 5. (Opcional) Guardar los productos relacionados - requiere tabla intermedia si se desea
+        // 🔁 5️⃣ (Opcional) Insertar productos si tienes tabla intermedia
+        // foreach ($productos as $producto) {
+        //     $nombreProducto = $producto['nombre'];
+        //     $cantidad = intval($producto['cantidad']);
+        //     $totalProd = floatval(str_replace(['$', '.', ','], ['', '', '.'], $producto['total']));
+        //     ...
+        // }
 
+        // ✅ Confirmar
         $conexion->commit();
-        echo json_encode(['success' => true, 'mensaje' => 'Transacci\u00f3n completada exitosamente.']);
+        echo json_encode(['status' => 'success', 'venta_id' => $idVenta]);
+        exit;
 
     } catch (Exception $e) {
-        $conexion->rollback();  
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        $conexion->rollback();
+        echo json_encode(['status' => 'error', 'message' => 'Error: ' . $e->getMessage()]);
+        exit;
     }
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+    exit;
 }
 ?>

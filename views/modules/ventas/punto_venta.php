@@ -34,16 +34,19 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 
 // ... conexión y sesión
-
-$query = "SELECT nombre_medio_pago FROM MedioPago";
+$query = "SELECT id_medio_pago, nombre_medio_pago FROM MedioPago";
 $resultMediosPago = $conexion->query($query);
 
 $mediosPago = [];
 if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
     while ($row = $resultMediosPago->fetch_assoc()) {
-        $mediosPago[] = $row['nombre_medio_pago'];
+        $mediosPago[] = [
+            'id' => $row['id_medio_pago'],
+            'nombre' => $row['nombre_medio_pago']
+        ];
     }
 }
+
 ?>
 
 
@@ -98,11 +101,12 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
     </div>
 
     <div class="tipo-pago">
-      <select id="medio-pago" name="medio_pago">
-        <?php foreach ($mediosPago as $medio) : ?>
-            <option value="<?= htmlspecialchars($medio) ?>"><?= htmlspecialchars($medio) ?></option>
-        <?php endforeach; ?>
+    <select id="medio-pago" name="medio_pago">
+      <?php foreach ($mediosPago as $medio) : ?>
+        <option value="<?= $medio['id'] ?>"><?= htmlspecialchars($medio['nombre']) ?></option>
+      <?php endforeach; ?>
     </select>
+
 
 
       <label><input type="checkbox" /> Proppina Incluida</label>
