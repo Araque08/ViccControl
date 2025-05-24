@@ -169,8 +169,8 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
 
 
 
-<script src="../../../public/js/punto_venta.js"></script>
-<script src="../../../public/js/modal_cliente.js"></script>
+<script src="/public/js/punto_venta.js"></script>
+<script src="/public/js/modal_cliente.js"></script>
 
 
 </body>
