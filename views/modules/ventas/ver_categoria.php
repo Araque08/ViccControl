@@ -17,10 +17,15 @@ $sql = "SELECT
     p.id_producto,
     p.nombre_producto,
     p.Precio_venta,
-    c.nombre_categoria
+    c.nombre_categoria,
+    IFNULL(SUM(r.cantidad * pp.precio_promedio), 0) AS costo_total
 FROM Productos p
 JOIN CategoriaProducto c ON p.fk_id_categoria = c.id_categoria
-WHERE c.fk_id_restaurante= ? and c.id_categoria= ?;";
+LEFT JOIN Receta r ON r.fk_id_producto = p.id_producto
+LEFT JOIN PrecioPromedio pp ON pp.fk_id_materia_prima = r.fk_id_materia_prima
+WHERE c.fk_id_restaurante = ? AND c.id_categoria = ?
+GROUP BY p.id_producto";
+
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("ii", $_SESSION['id_restaurante'], $_SESSION['id_categoria'] );
 $stmt->execute();
@@ -74,6 +79,20 @@ if (isset($_GET['id_categoria'])) {
             <img src="/../../../public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
+    <?php if (isset($_GET['eliminado'])): ?>
+    <div class="alert-success">Producto eliminado correctamente.</div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <div class="alert-error">
+            <?php
+            switch ($_GET['error']) {
+                case 'falta_id': echo "ID del producto no proporcionado."; break;
+                case 'fallo': echo "Error al eliminar el producto."; break;
+                default: echo "Ocurrió un error desconocido."; break;
+            }
+            ?>
+        </div>
+    <?php endif; ?>
+
     <div class="container_buscar">
         <div class="add_receta">
             <a href="nueva_receta.php?id_categoria=<?php echo $_SESSION['id_categoria']; ?>">
@@ -94,11 +113,12 @@ if (isset($_GET['id_categoria'])) {
                         echo "<tr>
                                 <td>" . $row['id_producto'] . "</td>
                                 <td>" . $row['nombre_producto'] . "</td>
-                                <td>$0.00</td> <!-- Costo vendrá después -->
+                                <td>$" . number_format($row['costo_total'], 2) ."</td>
                                 <td>$" . number_format($row['Precio_venta'], 2) . "</td>
                                 <td>
                                     <a href='nueva_receta.php?id=" . $row['id_producto'] . "'>✏️</a>
-                                    <a href='eliminar_producto.php?id=" . $row['id_producto'] . "'>🗑️</a>
+                                    <a href='../../../controller/Modulos/Ventas/eliminar_producto.php?id=" . $row['id_producto'] . "' onclick=\"return confirm('¿Estás seguro de eliminar este producto? Esta acción también eliminará su receta.')\">🗑️</a>
+
                                 </td>
                             </tr>";
                     }

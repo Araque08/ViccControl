@@ -59,29 +59,24 @@ $result = $conexion->query($sql);
     </div>
 </div>
 <div class="productos">
-
-    <?php if (isset($_GET['editado']) && $_GET['editado'] == 2): ?>
-        <div class="alert-success">Categoria Eliminada Correctamente.</div>
-    <?php endif; ?>
-    <?php if (isset($_GET['guardado']) && $_GET['guardado'] == 1): ?>
-        <div class="alert-success">Categoria creada Correctamente.</div>
-    <?php endif; ?>
-    <?php if (isset($_GET['editado'])): ?>
-    <div class="alert-success">Categoría actualizada correctamente.</div>
+    <?php if (isset($_GET['creado'])): ?>
+        <div class="alert-success">Categoría creada correctamente.</div>
+    <?php elseif (isset($_GET['editado'])): ?>
+        <div class="alert-success">Categoría actualizada correctamente.</div>
     <?php elseif (isset($_GET['error'])): ?>
         <div class="alert-error">
             <?php
             switch ($_GET['error']) {
-                case 'id_faltante': echo "ID de categoría no válido."; break;
                 case 'imagen_error': echo "Error al subir la imagen."; break;
-                case 'actualizar': echo "Error al actualizar la categoría."; break;
-                default: echo "Error desconocido."; break;
+                case 'imagen_requerida': echo "La imagen es obligatoria para crear una nueva categoría."; break;
+                case 'fallo_actualizar': echo "No se pudo actualizar la categoría."; break;
+                case 'fallo_crear': echo "No se pudo crear la categoría."; break;
+                case 'sin_sesion': echo "Sesión de restaurante no válida."; break;
+                default: echo "Ocurrió un error inesperado."; break;
             }
             ?>
         </div>
     <?php endif; ?>
-
-
     <div class="container-productos">
 
         <?php
