@@ -111,8 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </body>
 </html>`;
-
-    fetch('/controller/Modulos/Ventas/procesar_pago.php', {
+fetch('../../../controller/Modulos/Ventas/procesar_pago.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

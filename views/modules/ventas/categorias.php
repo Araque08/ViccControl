@@ -120,6 +120,6 @@ $result = $conexion->query($sql);
         </div>
     </div>  
 </div>
-<script src="/../../../public/js/nueva_categoria_ventas.js"></script>
+<script src="/public/js/nueva_categoria_ventas.js"></script>
 </body>
 </html>
