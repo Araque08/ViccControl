@@ -1,0 +1,55 @@
+.form-section, .container_formulario{
+    width: 90%;
+    height:400px;
+}
+
+.container_formulario{
+    height: 450px;
+}
+
+.form-section form{
+    display: flex;
+    height: 90%;
+}
+
+
+.familia{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 8px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.datos_personales{
+    width: 35%;
+    height: 100%;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.datos_personales input{
+    display: block;
+    width: 90%;
+}
+
+.datos_contacto{
+    border: 1px solid black;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+
+.detalle_contrato{
+    border: 1px solid black;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+

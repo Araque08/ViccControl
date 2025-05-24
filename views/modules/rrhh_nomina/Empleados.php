@@ -1,94 +1,203 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['Usuario'])) {
+    header("Location: ../../../index.php");
+    exit;
+}
+
+include("../../../conexionBD/conexion.php");
+
+// ⏱ Tiempo límite de inactividad (en segundos)
+$tiempo_limite = 1200;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactividad = time() - $_SESSION['ultimo_acceso'];
+    if ($inactividad > $tiempo_limite) {
+        session_unset();
+        session_destroy();
+        header("Location: ../../../index.php?expirada=1");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
+$id_restaurante = $_SESSION['id_restaurante'];
+
+// Consultar cargos
+$sqlCargos = "SELECT id_cargo, nombre_cargo FROM Cargo";
+$resultCargos = $conexion->query($sqlCargos);
+
+// Consultar contratos
+$sqlContratos = "SELECT id_contrato, nombre_contrato FROM TipoContrato";
+$resultContratos = $conexion->query($sqlContratos);
+
+$sql = "SELECT 
+            e.id_empleado, 
+            e.nombre_empleado, 
+            e.apellido_empleado, 
+            e.email_empleado,
+            e.telefono_empleado,
+            tc.nombre_contrato
+        FROM Empleado e
+        JOIN TipoContrato tc ON e.fk_id_contrato = tc.id_contrato";
+
+$result_empleados = $conexion->query($sql);
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Empleado</title>
-    <link rel="stylesheet" href="../../public/css/admin.css"> <!-- Opcional, si tienes estilos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Modulo de Control</title>
+    <link rel="stylesheet" href="../../../public/css/menu.css">
+    <link rel="stylesheet" href="../../../public/css/compras_inventario.css">
+    <link rel="stylesheet" href="../../../public/css/modal.css">
+    <link rel="stylesheet" href="../../../public/css/empleado.css">
 </head>
 <body>
-<h2>Registrar Nuevo Empleado</h2>
-<form action="../../controller/admin/guardar_empleado.php" method="POST">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" required><br>
+<div class="header-ventas">
+    <div class="container-header">
+        <div class="compañia">
+            <div class="container-subModulo">
+                <div class="regresar">
+                    <a href="rrhh_nomina_menu.php">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+                <h1 class="nombre-pagina"><strong>Empleado</strong></h1>
+            </div>
+        </div>
+        <div class="logo">
+            <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+        </div>
+    </div>
 
-    <label>Apellido:</label>
-    <input type="text" name="apellido" required><br>
+    <div class="container">
+        <div class="container_formulario">
 
-    <label>Lugar de nacimiento:</label>
-    <input type="text" name="lugar_nacimiento"><br>
+            <!-- Formulario para crear un nuevo empleado -->
+            <div class="form-section">
+                <h3>Crear nueva materia prima</h3>
+                <form action="/../../../controller/Modulos/rrhh_nomina/guardar_empleado.php" method="POST">
 
-    <label>Fecha de nacimiento:</label>
-    <input type="date" name="fecha_nacimiento"><br>
+                    <div class="datos_personales" >
+                        <input type="text" name="nombre" placeholder="Nombre" required>
+                        <input type="text" name="apellido" placeholder="Apellido" required>
+                        <input type="text" name="numero_documento" placeholder="Numero de Documento">
+                        <input type="text" name="lugar_nacimiento" placeholder="Lugar de nacimiento">
+                        <input type="date" name="fecha_nacimiento" placeholder="fecha Nacimiento">
+                        <select name="estado_civil" >
+                            <option value="">--Seleccionar estado civil--</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                            <option value="Viudo">Viudo</option>
+                        </select>
+                        <input type="text" name="cuenta_banco" placeholder="Cuenta de Banco">
+                    </div>
+                    <div class="datos_derecha">
+                            <div class="datos_contacto">
+                                <input type="text" name="telefono" placeholder="Telefono">
+                                <input type="email" name="email" placeholder="Correo Electronico">
+                                <input type="text" name="direccion" placeholder="Direccion">
+                            </div>
 
-    <label>Estado civil:</label>
-    <select name="estado_civil">
-        <option value="">--Seleccionar--</option>
-        <option value="Soltero">Soltero</option>
-        <option value="Casado">Casado</option>
-        <option value="Divorciado">Divorciado</option>
-        <option value="Viudo">Viudo</option>
-    </select><br>
+                            <div class="detalle_contrato">
+                                <select name="fk_id_contrato" required>
+                                    <option value="">-- Seleccionar Tipo de Contrato --</option>
+                                    <?php while ($row = $resultContratos->fetch_assoc()): ?>
+                                        <option value="<?= $row['id_contrato'] ?>"><?= htmlspecialchars($row['nombre_contrato']) ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <select name="fk_id_cargo" required>
+                                    <option value="">-- Seleccionar Cargo --</option>
+                                    <?php while ($row = $resultCargos->fetch_assoc()): ?>
+                                        <option value="<?= $row['id_cargo'] ?>"><?= htmlspecialchars($row['nombre_cargo']) ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <input type="text" name="funciones" placeholder="funciones">
+                                <input type="number" step="0.01" name="salario" placeholder="Salario">
+                            </div>
 
-    <label>Dirección:</label>
-    <input type="text" name="direccion"><br>
+                            <div class="familia">
+                                <select name="tiene_hijos" >
+                                    <option value="">Hijos</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
 
-    <label>Teléfono:</label>
-    <input type="text" name="telefono"><br>
+                                <input type="number" name="cantidad_hijos" min="0" placeholder="cantidad de hijos">
+                                <button type="submit">Registrar Empleado</button>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-    <label>Email:</label>
-    <input type="email" name="email"><br>
+        <div class="container_buscar">
+            <!-- Buscar por primera letra -->
+            <div class="search-section">
+                <h3>Buscar por nombre</h3>
+                <input type="text" id="search" placeholder="Buscar...">
+                <button id="searchBtn">Buscar</button>
+            </div>
 
-    <label>Cuenta bancaria:</label>
-    <input type="text" name="cuenta_banco"><br>
+            <!-- Tabla con la lista de materias primas -->
+            <table id="empleadosTable">
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Email</th>
+                        <th>Tel</th>
+                        <th>Contrato</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = $result_empleados->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . $row['id_empleado'] . "</td>
+                                <td>" . $row['nombre_empleado'] . "</td>
+                                <td>" . $row['apellido_empleado'] . "</td>
+                                <td>" . $row['id_empleado'] . "</td>
+                                <td>" . $row['email_empleado'] . "</td>
+                                <td>" . $row['telefono_empleado'] . "</td>
+                                <td>" . $row['nombre_contrato'] . "</td>
+                                <td>
+                                    <button onclick=\"editarEmpleado(" . $row['id_empleado'] . ")\">✏️</button>
+                                    <button onclick=\"eliminarEmpleado(" . $row['id_empleado'] . ")\">🗑️</button>
+                                </td>
+                            </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
 
-    <label>Salario:</label>
-    <input type="number" step="0.01" name="salario"><br>
-
-    <label>Número de documento:</label>
-    <input type="text" name="numero_documento"><br>
-
-    <label>Funciones:</label>
-    <input type="text" name="funciones"><br>
-
-    <label>¿Tiene hijos?</label>
-    <select name="tiene_hijos">
-        <option value="0">No</option>
-        <option value="1">Sí</option>
-    </select><br>
-
-    <label>Cantidad de hijos:</label>
-    <input type="number" name="cantidad_hijos" min="0"><br>
-
-    <label>Cargo:</label>
-    <select name="fk_id_cargo" required>
-        <!-- Puedes llenar esto dinámicamente con PHP si tienes tabla de cargos -->
-        <option value="1">Mesero</option>
-        <option value="2">Cocinero</option>
-        <option value="3">Gerente</option>
-    </select><br>
-
-    <label>Tipo de Contrato:</label>
-    <select name="fk_id_contrato" required>
-        <!-- Puedes llenar esto dinámicamente también -->
-        <option value="1">Término fijo</option>
-        <option value="2">Término indefinido</option>
-    </select><br>
-
-    <h3>Crear Usuario para el Empleado</h3>
-    <label>Nombre de Usuario:</label>
-    <input type="text" name="usuario" required><br>
-
-    <label>Contraseña:</label>
-    <input type="password" name="contrasena" required><br>
-
-    <label>Rol:</label>
-    <select name="id_rol" required>
-        <!-- Llenar con los roles disponibles -->
-        <option value="3">Cajero</option>
-        <option value="4">Mesero</option>
-    </select><br>
-
-    <button type="submit">Registrar Empleado</button>
-</form>
+        </div>
+    </div>
+    <!-- Modal para agregar nueva categoría -->
+   <div id="nuevaCategoriaModal" class="modal">
+        <div class="modal-content">
+            <span class="cerrar-modal">&times;</span>
+            <div id="contenidoNuevaCategoria"></div>
+        </div>
+    </div>
+    <!-- Modal para editar materia prima -->
+    <div id="nuevoModal" class="modal">
+        <div class="modal-content">
+            <span class="cerrar-modal">&times;</span>
+            <div id="contenidoModal"></div>
+        </div>
+    </div>
 </body>
 </html>
