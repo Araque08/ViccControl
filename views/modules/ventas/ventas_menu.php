@@ -7,8 +7,7 @@ if (!isset($_SESSION['Usuario'])) {
     header("Location: ../../../index.php");
     exit;
 }
-
-$_SESSION['id_empleado'] = $fila['id_empleado']; // <-- cuando el login es exitoso
+ // <-- cuando el login es exitoso
 
 
 include("../../../conexionBD/conexion.php");

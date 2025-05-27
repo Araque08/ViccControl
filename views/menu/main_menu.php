@@ -37,6 +37,7 @@ while ($row = $resultado->fetch_assoc()) {
 
 setlocale(LC_TIME, 'es_ES.UTF-8');
 $nombreRestaurante = $_SESSION['Restaurante'] ?? 'Restaurante';
+$_SESSION['nombre_restaurante'] = $nombreRestaurante;
 $mesActual = ucfirst(strftime("%B %Y"));
 ?>
 

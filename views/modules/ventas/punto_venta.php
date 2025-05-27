@@ -134,6 +134,9 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
       <label for="nombre_cliente">Nombre:</label>
       <input type="text" id="nombre_cliente" name="nombre_cliente" required><br><br>
 
+      <label for="nombre_cliente">Cedula:</label>
+      <input type="text" id="cedula" name="cedula" required><br><br>
+
       <label for="telefono_cliente">Teléfono:</label>
       <input type="text" id="telefono_cliente" name="telefono_cliente" required><br><br>
 

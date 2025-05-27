@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // 📋 Datos recibidos
         $nombre      = $data['nombre_cliente'];
+        $cedula      = $data['cedula'];
         $telefono    = $data['telefono_cliente'];
         $direccion   = $data['direccion_cliente'] ?? '';
         $email       = $data['email_cliente'] ?? '';
@@ -53,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // 1️⃣ Insertar cliente
-        $stmt = $conexion->prepare("INSERT INTO Cliente (nombre_cliente, telefono_cliente, direccion_cliente, email_cliente) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $nombre, $telefono, $direccion, $email);
+        $stmt = $conexion->prepare("INSERT INTO Cliente (nombre_cliente, telefono_cliente, direccion_cliente, email_cliente, cedula) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $nombre, $telefono, $direccion, $email, $cedula);
         $stmt->execute();
         $idCliente = $stmt->insert_id;
         $stmt->close();
@@ -78,13 +79,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
 
-        // 🔁 5️⃣ (Opcional) Insertar productos si tienes tabla intermedia
-        // foreach ($productos as $producto) {
-        //     $nombreProducto = $producto['nombre'];
-        //     $cantidad = intval($producto['cantidad']);
-        //     $totalProd = floatval(str_replace(['$', '.', ','], ['', '', '.'], $producto['total']));
-        //     ...
-        // }
+        // 5️⃣ Insertar productos en DetalleVenta
+        foreach ($productos as $producto) {
+            if (!isset($producto['id_producto']) || !isset($producto['cantidad'])) {
+                throw new Exception("Producto sin información completa.");
+            }
+
+            $idProducto = intval($producto['id_producto']);
+            $cantidad = intval($producto['cantidad']);
+            $precio_unitario = intval($producto['precio_unitario']);
+
+            $stmt = $conexion->prepare("INSERT INTO DetalleVenta (fk_id_venta, fk_id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("iiid", $idVenta, $idProducto, $cantidad, $precio_unitario);
+            $stmt->execute();
+            $stmt->close();
+        }
+
 
         // ✅ Confirmar
         $conexion->commit();
