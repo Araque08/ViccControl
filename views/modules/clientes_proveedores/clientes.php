@@ -28,16 +28,16 @@ $query = "
 SELECT 
     v.id_venta AS cod_venta,
     c.cedula AS cedula_cliente,
-    e.nombre_empleado AS cajero,
+    u.nombre_usuario AS cajero,  -- ← aquí ahora usamos el nombre del usuario
     mp.nombre_medio_pago AS medio_pago,
     v.fecha,
     v.total_venta AS total
 FROM Venta v
 JOIN Cliente c ON v.fk_id_cliente = c.id_cliente
 JOIN Empleado e ON v.fk_id_empleado = e.id_empleado
+JOIN Usuario u ON u.fk_id_empleado = e.id_empleado-- ← unión con la tabla Usuario
 JOIN Venta_MedioPago vmp ON v.id_venta = vmp.fk_id_venta
-JOIN MedioPago mp ON vmp.fk_id_medio_pago = mp.id_medio_pago
-";
+JOIN MedioPago mp ON vmp.fk_id_medio_pago = mp.id_medio_pago";
 
 $resultado = $conexion->query($query);
 

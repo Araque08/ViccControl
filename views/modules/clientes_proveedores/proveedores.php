@@ -74,7 +74,9 @@ $proveedores_result = $stmt->get_result();
     <?php if (isset($_GET['editado']) && $_GET['editado'] == 1): ?>
         <div class="alert-success">Proveedor actualizado correctamente.</div>
     <?php endif; ?>
-    
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <div class="alert-success">Proveedor craeado correctamente.</div>
+    <?php endif; ?>
     <?php if (isset($_GET['eliminado']) && $_GET['eliminado'] == 1): ?>
     <div class="alert-success">Proveedor eliminado correctamente.</div>
     <?php elseif (isset($_GET['error'])): ?>

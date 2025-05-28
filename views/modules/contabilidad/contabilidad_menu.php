@@ -139,9 +139,9 @@ $mesActual = ucfirst(strftime("%B %Y"));
             </div>
         </div>
         <div class="module-card">
-            <img src="../../../public/img/ModuloVentas/Productos.png" alt="Productos">
+            <img src="../../../public/img/ModuloContabilidad/AjustesContables.png" alt="Productos">
             <div class="module-info">
-                <p>Productos</p>
+                <p>Ajustes Contables</p>
             </div>
         </div>
     </div>

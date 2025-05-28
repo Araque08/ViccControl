@@ -16,7 +16,7 @@ if (isset($_SESSION['ultimo_acceso'])) {
     if ($inactividad > $tiempo_limite) {
         session_unset();
         session_destroy();
-        header("Location: ../../../index.php?expirada=1");
+        header("Location: /../../../index.php?expirada=1");
         exit;
     }
 }
@@ -83,7 +83,7 @@ $result_empleados = $conexion->query($sql);
 
             <!-- Formulario para crear un nuevo empleado -->
             <div class="form-section">
-                <h3>Crear nueva materia prima</h3>
+                <h3>Crear nuevo empleado</h3>
                 <form action="/../../../controller/Modulos/rrhh_nomina/guardar_empleado.php" method="POST">
 
                     <div class="datos_personales" >
@@ -118,7 +118,9 @@ $result_empleados = $conexion->query($sql);
                                 <select name="fk_id_cargo" required>
                                     <option value="">-- Seleccionar Cargo --</option>
                                     <?php while ($row = $resultCargos->fetch_assoc()): ?>
-                                        <option value="<?= $row['id_cargo'] ?>"><?= htmlspecialchars($row['nombre_cargo']) ?></option>
+                                        <?php if (strtolower($row['nombre_cargo']) !== 'administrador'): ?>
+                                            <option value="<?= $row['id_cargo'] ?>"><?= htmlspecialchars($row['nombre_cargo']) ?></option>
+                                        <?php endif; ?>
                                     <?php endwhile; ?>
                                 </select>
                                 <input type="text" name="funciones" placeholder="funciones">

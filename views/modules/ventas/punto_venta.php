@@ -63,6 +63,11 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
 <body>
 
 <header>
+  <div class="regresar">
+    <a href="ventas_menu.php">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+  </div>
   Punto de venta
 </header>
 
