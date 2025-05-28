@@ -6,6 +6,7 @@ Array
     [Restaurante] => carteldelsushi
     [Rol] => Administrador
     [ruta_inicio] => /../../../ViccControl/../views/menu/main_menu.php
-    [ultimo_acceso] => 1748471981
+    [ultimo_acceso] => 1748475073
     [nombre_restaurante] => carteldelsushi
+    [id_categoria] => 10
 )

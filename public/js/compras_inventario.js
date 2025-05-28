@@ -21,6 +21,6 @@ document.querySelector(".cerrar-modal").onclick = () => {
 
 // Cierra si se hace clic fuera del contenido
 window.onclick = function(event) {
-    let modal = document.getElementById("nuevaCategoriaModal");
-    modal.addEventListener('click', cerrar(modal, event));
+    let modal1 = document.getElementById("nuevaCategoriaModal");
+    modal1.addEventListener('click', cerrar(modal1, event));
 }

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows > 0) {
         // Si la categoría ya existe, retornar un error
-        echo "La categoría ya existe.";
+        header("Location: ../../../views/modules/compras_inventario/materia_prima.php?categoria=1");
         exit;  // Terminamos el script si la categoría ya existe
     }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ejecutamos la inserción
     if ($stmt_insert->execute()) {
-        header("../../../views/modules/compras_inventario/materia_prima.php");
+        header("Location: ../../../views/modules/compras_inventario/materia_prima.php?exito=2");
     } else {
         echo "Error al agregar la categoría.";
     }

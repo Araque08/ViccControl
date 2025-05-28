@@ -79,6 +79,12 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
     <?php if (isset($_GET['editado']) && $_GET['editado'] == 1): ?>
         <div class="alert-success">Proveedor actualizado correctamente.</div>
     <?php endif; ?>
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 2): ?>
+        <div class="alert-success">Categoria creada correctamente.</div>
+    <?php endif; ?>
+    <?php if (isset($_GET['categoria']) && $_GET['categoria'] == 1): ?>
+        <div class="alert-success">Categoria creada correctamente.</div>
+    <?php endif; ?>
 
     <?php if (isset($_GET['eliminado']) && $_GET['eliminado'] == 1): ?>
     <div class="alert-success">Materia Prima eliminada correctamente.</div>
@@ -191,7 +197,7 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
         </div>
     </div>
 
-    <script src="../../../public/js/compras_inventario.js"></script>
     <script src="../../../public/js/editar_materia.js" ></script>
+    <script src="../../../public/js/compras_inventario.js"></script>
 </body>
 </html>
