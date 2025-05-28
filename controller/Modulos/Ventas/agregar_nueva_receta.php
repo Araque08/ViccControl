@@ -72,18 +72,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Insertar ingredientes en la tabla Receta
-    $sql_receta = "INSERT INTO Receta (fk_id_producto, fk_id_materia_prima, fk_id_restaurante, cantidad)
-                   VALUES (?, ?, ?, ?)";
-    $stmt = $conexion->prepare($sql_receta);
+        $sql_receta = "INSERT INTO Receta (fk_id_producto, fk_id_materia_prima, fk_id_restaurante, cantidad)
+                    VALUES (?, ?, ?, ?)";
+        $stmt = $conexion->prepare($sql_receta);
 
-    for ($i = 0; $i < count($materias_primas); $i++) {
-        $id_materia = intval($materias_primas[$i]);
-        $cantidad = floatval($cantidades[$i]);
+        for ($i = 0; $i < count($materias_primas); $i++) {
+            $id_materia = intval($materias_primas[$i]);
+            $cantidad = floatval($cantidades[$i]);
 
-        $stmt->bind_param("iiid", $id_producto, $id_materia, $id_restaurante, $cantidad);
-        $stmt->execute();
-    }
-    $stmt->close();
+            // Verificar si ya existe la combinación
+            $verificar = $conexion->prepare("SELECT 1 FROM Receta WHERE fk_id_producto = ? AND fk_id_materia_prima = ?");
+            $verificar->bind_param("ii", $id_producto, $id_materia);
+            $verificar->execute();
+            $verificar->store_result();
+
+            if ($verificar->num_rows > 0) {
+                // Ya existe ese ingrediente para ese producto
+                $verificar->close();
+                $stmt->close();
+                $conexion->close();
+                header("Location: ../../../views/modules/ventas/nueva_receta.php?id=$id_producto&error=1");
+                exit;
+            }
+
+            $verificar->close();
+
+            // Insertar si no está duplicado
+            $stmt->bind_param("iiid", $id_producto, $id_materia, $id_restaurante, $cantidad);
+            $stmt->execute();
+        }
+
+        $stmt->close();
 
     $conexion->close();
     header("Location: ../../../views/modules/ventas/nueva_receta.php?id=$id_producto&exito=1");

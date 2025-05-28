@@ -3,9 +3,22 @@ session_start();
 include("../../../conexionBD/conexion.php");
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../index.php");
+    header("Location: ../../../index.php");
     exit;
 }
+
+$tiempo_limite = 1200;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactividad = time() - $_SESSION['ultimo_acceso'];
+    if ($inactividad > $tiempo_limite) {
+        session_unset();
+        session_destroy();
+        header("Location: ../../../index.php?expirada=1");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
 
 $id_producto = intval($_GET['id_producto'] ?? 0);
 

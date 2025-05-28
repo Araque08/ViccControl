@@ -1,11 +1,24 @@
 <?php
 session_start();
+include("../../../conexionBD/conexion.php");
+
 if (!isset($_SESSION['Usuario'])) {
     header("Location: ../../../index.php");
     exit;
 }
 
-include("../../../conexionBD/conexion.php");
+$tiempo_limite = 1200;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactividad = time() - $_SESSION['ultimo_acceso'];
+    if ($inactividad > $tiempo_limite) {
+        session_unset();
+        session_destroy();
+        header("Location: ../../../index.php?expirada=1");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
 
 $sql = "SELECT 
             mp.id_materia_prima,

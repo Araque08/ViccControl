@@ -2,22 +2,36 @@
 session_start();
 include("../../../conexionBD/conexion.php");
 
+$tiempo_limite = 1200;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactividad = time() - $_SESSION['ultimo_acceso'];
+    if ($inactividad > $tiempo_limite) {
+        session_unset();
+        session_destroy();
+        header("Location: ../../../index.php?expirada=1");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
 $id_producto = isset($_GET['id']) ? intval($_GET['id']) : null;
 $resultado_receta = null;
 
 if ($id_producto !== null) {
     $sql_receta = "SELECT 
-        mp.id_materia_prima,
-        mp.nombre_materia_prima,
-        mp.stock_disp AS existencia,
-        mp.unidad_materia_prima AS Unidad,
-        r.cantidad,
-        pp.precio_promedio,
-        (r.cantidad * pp.precio_promedio) AS Costo_receta
-    FROM Receta r
-    JOIN MateriaPrima mp ON r.fk_id_materia_prima = mp.id_materia_prima
-    JOIN PrecioPromedio pp ON pp.fk_id_materia_prima = mp.id_materia_prima
-    WHERE r.fk_id_producto = ?";
+    mp.id_materia_prima,
+    mp.nombre_materia_prima,
+    mp.stock_disp AS existencia,
+    mp.unidad_materia_prima AS Unidad,
+    r.cantidad,
+    COALESCE(pp.precio_promedio, 0) AS precio_promedio,
+    (r.cantidad * COALESCE(pp.precio_promedio, 0)) AS Costo_receta
+FROM Receta r
+JOIN MateriaPrima mp ON r.fk_id_materia_prima = mp.id_materia_prima
+LEFT JOIN PrecioPromedio pp ON pp.fk_id_materia_prima = mp.id_materia_prima
+WHERE r.fk_id_producto = ?";
+
     
     $stmt_receta = $conexion->prepare($sql_receta);
     $stmt_receta->bind_param("i", $id_producto);
@@ -73,6 +87,10 @@ $materia_prima = $stmt_materia->get_result();
         </div>
     </div>
 </div>
+
+    <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+        <div class="alert-error">⚠️ Este ingrediente ya fue agregado a la receta.</div>
+    <?php endif; ?>
 
 <div class="container">
     <div class="container_formulario">

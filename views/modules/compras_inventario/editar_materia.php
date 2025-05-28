@@ -7,6 +7,19 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
+$tiempo_limite = 1200;
+
+if (isset($_SESSION['ultimo_acceso'])) {
+    $inactividad = time() - $_SESSION['ultimo_acceso'];
+    if ($inactividad > $tiempo_limite) {
+        session_unset();
+        session_destroy();
+        header("Location: ../../../index.php?expirada=1");
+        exit;
+    }
+}
+$_SESSION['ultimo_acceso'] = time();
+
 $id = intval($_GET['id']);
 $id_restaurante = $_SESSION['id_restaurante'];
 

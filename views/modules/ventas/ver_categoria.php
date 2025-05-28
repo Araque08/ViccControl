@@ -9,7 +9,7 @@ session_start();
 include("../../../conexionBD/conexion.php");
 
 if (!isset($_SESSION['Usuario'])) {
-    header("Location: ../../index.php");
+    header("Location: ../../../index.php");
     exit;
 }
 $_SESSION['id_categoria'] = $_GET['id_categoria'];
