@@ -77,7 +77,7 @@ $materia_prima = $stmt_materia->get_result();
 <div class="container">
     <div class="container_formulario">
         <div class="form-section">
-            <form action="/../../../controller/Modulos/ventas/agregar_nueva_receta.php" method="POST" enctype="multipart/form-data">
+            <form action="/../../../controller/Modulos/Ventas/agregar_nueva_receta.php" method="POST" enctype="multipart/form-data">
                 <h3>Crear nuevo producto</h3>
                 <input type="hidden" name="id_categoria" value="<?= htmlspecialchars($_SESSION['id_categoria']) ?>">
                 <input type="text" name="nombre" placeholder="Nombre" id="nombre" required>
