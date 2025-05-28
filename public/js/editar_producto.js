@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const idProducto = urlParams.get("id");
 
         if (idProducto) {
-            fetch('controller/Modulos/ventas/obtener_producto.php?id=${idProducto}')
+            fetch(`/../../../controller/Modulos/Ventas/obtener_producto.php?id=${idProducto}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data) {
