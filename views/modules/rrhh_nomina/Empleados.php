@@ -36,17 +36,17 @@ $sql = "SELECT
             e.id_empleado, 
             e.nombre_empleado, 
             e.apellido_empleado, 
+            e.cedula,
             e.email_empleado,
             e.telefono_empleado,
-            tc.nombre_contrato
+            tc.nombre_contrato,
+            e.estado_empleado
         FROM Empleado e
         JOIN TipoContrato tc ON e.fk_id_contrato = tc.id_contrato";
 
 $result_empleados = $conexion->query($sql);
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -77,6 +77,9 @@ $result_empleados = $conexion->query($sql);
             <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
         </div>
     </div>
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <div class="alert-success">Se ha hecho correctamente.</div>
+    <?php endif; ?>
 
     <div class="container">
         <div class="container_formulario">
@@ -133,10 +136,15 @@ $result_empleados = $conexion->query($sql);
                                     <option value="0">No</option>
                                     <option value="1">Sí</option>
                                 </select>
-
                                 <input type="number" name="cantidad_hijos" min="0" placeholder="cantidad de hijos">
-                                <button type="submit">Registrar Empleado</button>
+                                <button onclick=" mostrarNuevaCategoria(<?= $_SESSION['id_restaurante'] ?>)">Archivos empleado</button>
                             </div>
+                            <select name="estado_empleado" required>
+                                    <option value="">-- Seleccionar estado--</option>
+                                    <option value="Activo">-- Activo --</option>
+                                    <option value="Inactivo">-- Inactivo --</option>
+                            </select>
+                            <button type="submit">Registrar Empleado</button>
                     </div>
                 </form>
             </div>
@@ -171,13 +179,12 @@ $result_empleados = $conexion->query($sql);
                                 <td>" . $row['id_empleado'] . "</td>
                                 <td>" . $row['nombre_empleado'] . "</td>
                                 <td>" . $row['apellido_empleado'] . "</td>
-                                <td>" . $row['id_empleado'] . "</td>
+                                <td>" . $row['cedula'] . "</td>
                                 <td>" . $row['email_empleado'] . "</td>
                                 <td>" . $row['telefono_empleado'] . "</td>
-                                <td>" . $row['nombre_contrato'] . "</td>
+                                <td>" . $row['estado_empleado'] . "</td>
                                 <td>
                                     <button onclick=\"editarEmpleado(" . $row['id_empleado'] . ")\">✏️</button>
-                                    <button onclick=\"eliminarEmpleado(" . $row['id_empleado'] . ")\">🗑️</button>
                                 </td>
                             </tr>";
                     }
@@ -201,5 +208,35 @@ $result_empleados = $conexion->query($sql);
             <div id="contenidoModal"></div>
         </div>
     </div>
+
+    <script>
+function editarEmpleado(id) {
+    fetch("../../../controller/Modulos/rrhh_nomina/obtener_empleado.php?id=" + id)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                document.querySelector('input[name="nombre"]').value = data.nombre_empleado;
+                document.querySelector('input[name="apellido"]').value = data.apellido_empleado;
+                document.querySelector('input[name="numero_documento"]').value = data.cedula;
+                document.querySelector('input[name="lugar_nacimiento"]').value = data.lugar_nacimiento;
+                document.querySelector('input[name="fecha_nacimiento"]').value = data.fecha_nacimiento;
+                document.querySelector('select[name="estado_civil"]').value = data.estado_civil || '';
+                document.querySelector('input[name="cuenta_banco"]').value = data.cuenta_banco;
+                document.querySelector('input[name="telefono"]').value = data.telefono_empleado;
+                document.querySelector('input[name="email"]').value = data.email_empleado;
+                document.querySelector('input[name="direccion"]').value = data.direccion_empleado;
+                document.querySelector('input[name="funciones"]').value = data.funciones_empleado;
+                document.querySelector('input[name="salario"]').value = data.salario_empleado;
+                document.querySelector('select[name="fk_id_contrato"]').value = data.fk_id_contrato;
+                document.querySelector('select[name="fk_id_cargo"]').value = data.fk_id_cargo;
+                document.querySelector('select[name="estado_empleado"]').value = data.estado_empleado || '';
+                document.querySelector('select[name="tiene_hijos"]').value = data.tiene_hijos;
+                document.querySelector('input[name="cantidad_hijos"]').value = data.cantidad_hijos;
+            }
+        })
+        .catch(error => console.error('Error al obtener datos del empleado:', error));
+}
+</script>
+
 </body>
 </html>

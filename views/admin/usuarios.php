@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['rol'] !== 'Administrador') {
+if ($_SESSION['Rol'] !== 'Administrador') {
     echo "Acceso no autorizado";
     exit;
 }
@@ -8,42 +8,77 @@ if ($_SESSION['rol'] !== 'Administrador') {
 include("../../conexionBD/conexion.php");
 
 // Obtener todos los roles disponibles (excepto SuperAdmin)
-$sql = "SELECT id_rol, nombre_rol FROM rol WHERE nombre_rol != 'SuperAdmin'";
+$sql = "SELECT id_rol, nombre_rol FROM Rol WHERE nombre_rol != 'SuperAdmin'  AND nombre_rol != 'Administrador'";
 $resultado = $conexion->query($sql);
+
+// Obtener los empleados registrados con cédula y nombre
+$sql_empleados = "SELECT id_empleado, cedula, CONCAT(nombre_empleado, ' ', apellido_empleado) AS nombre_completo 
+                  FROM Empleado 
+                  WHERE cedula IS NOT NULL AND cedula <> ''";
+$result_empleados = $conexion->query($sql_empleados);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Crear Usuario de Empleado</title>
-    <link rel="stylesheet" href="../../public/css/form.css"> <!-- Estilo si lo deseas -->
+    <link rel="stylesheet" href="../../public/css/usuarios_nuevos.css"> <!-- Estilo si lo deseas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>➕ Crear Usuario para Empleado</h2>
+    <div class="container-header">
+        <div class="compañia">
+            <div class="container-subModulo">
+                <div class="regresar">
+                    <a href="../../views/menu/main_menu.php">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+                <h1 class="nombre-pagina"><strong>Usuario</strong></h1>
+            </div>
+        </div>
+        <div class="logo">
+            <img src="../../../public/img/ViccControlImg.png" alt="logo de la compañia">
+        </div>
+    </div>
 
-    <form action="../../controller/admin/crear_usuario.php" method="POST">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br>
+    <?php if (isset($_GET['success'])): ?>
+        <div class="alert-success">Creado Perectamente.</div>
+    <?php endif; ?>
 
-        <label for="apellido">Apellido:</label><br>
-        <input type="text" id="apellido" name="apellido" required><br>
+    <?php if (isset($_GET['error'])): ?>
+        <div class="alert-success">Error al crearlo.</div>
+    <?php endif; ?>
 
-        <label for="usuario">Usuario:</label><br>
-        <input type="text" id="usuario" name="usuario" required><br>
 
-        <label for="contrasena">Contraseña:</label><br>
-        <input type="password" id="contrasena" name="contrasena" required><br>
+    <div class="form_container">
+        <form action="../../controller/admin/crear_usuario.php" method="POST">
+            <h2>Crear Usuario</h2>
+            <label for="empleado">Seleccionar Empleado:</label>
+            <select name="empleado" id="empleado" required>
+                <option value="" disabled selected>Seleccione un empleado</option>
+                <?php while ($emp = $result_empleados->fetch_assoc()): ?>
+                    <option value="<?= $emp['id_empleado'] ?>">
+                        <?= $emp['cedula'] . " - " . $emp['nombre_completo'] ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
 
-        <label for="id_rol">Rol del Usuario:</label><br>
-        <select name="id_rol" id="id_rol" required>
-            <option value="" disabled selected>Seleccione un rol</option>
-            <?php while ($row = $resultado->fetch_assoc()): ?>
-                <option value="<?= $row['id_rol'] ?>"><?= $row['nombre_rol'] ?></option>
-            <?php endwhile; ?>
-        </select><br><br>
+            <input type="text" id="usuario" name="usuario" placeholder="Usuario" required><br>
+            <input type="password" id="contrasena" name="contrasena" placeholder="contraseña" required><br>
 
-        <button type="submit">Crear Usuario</button>
-    </form>
+            <select name="id_rol" id="id_rol" required>
+                <option value="" disabled selected>Seleccione un rol</option>
+                <?php while ($row = $resultado->fetch_assoc()): ?>
+                    <option value="<?= $row['id_rol'] ?>"><?= $row['nombre_rol'] ?></option>
+                <?php endwhile; ?>
+            </select>
+
+            <button type="submit">Crear Usuario</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -1,0 +1,104 @@
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .form_container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            margin-top: 120px;
+        }
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #111827;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        select, input[type="text"], input[type="password"] {
+            width: 80%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background-color: #fff;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #4338ca;
+        }
+
+        .container-header{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding: 0 90px;
+        }
+
+        .compañia{
+            position: relative;
+            width: 200px;
+        }
+
+        .logo img{
+            width: 400px;
+        }
+
+        .compañia h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nombre-pagina{
+            margin-left: 10px;
+        }
+
+        i {   
+        position: absolute;
+        top: 40px;
+        left: 0px;
+        transform: translateY(-50%);
+        font-size: 40px;
+        color: black;
+        }

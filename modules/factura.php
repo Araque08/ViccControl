@@ -73,7 +73,11 @@ $igv = $venta['total_venta'] - $subtotal;
     </div>
     <table>
       <thead>
-        <tr><th>Producto</th><th>Cant</th><th>Total</th></tr>
+        <tr>
+          <th>Producto</th>
+          <th>Cant</th>
+          <th>Total</th>
+        </tr>
       </thead>
       <tbody>
         <?php while ($row = $productos->fetch_assoc()): ?>

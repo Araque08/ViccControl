@@ -1,12 +1,10 @@
 Array
 (
-    [id_usuario] => 3
-    [Usuario] => sebastian
+    [id_usuario] => 9
+    [Usuario] => elsson
     [id_restaurante] => 2
     [Restaurante] => carteldelsushi
-    [Rol] => Administrador
-    [ruta_inicio] => /../../../ViccControl/../views/menu/main_menu.php
-    [ultimo_acceso] => 1748475073
-    [nombre_restaurante] => carteldelsushi
-    [id_categoria] => 10
+    [Rol] => Cajero
+    [ruta_inicio] => /../../../ViccControl/../views/modules/ventas/punto_venta.php
+    [ultimo_acceso] => 1748486095
 )
