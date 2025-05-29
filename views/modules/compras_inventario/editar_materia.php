@@ -54,6 +54,7 @@ $categorias_result = $stmt_cat->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Materia Prima</title>
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
     <h3>editar materia prima</h3>

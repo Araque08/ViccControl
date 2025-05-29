@@ -88,6 +88,7 @@ $result_detalle = $stmt_detalle->get_result();
     <title>Modulo de Control</title>
     <link rel="stylesheet" href="../../../public/css/menu.css">
     <link rel="stylesheet" href="../../../public/css/compras_inventario.css">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 <div class="header-ventas">

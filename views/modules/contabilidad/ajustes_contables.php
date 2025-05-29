@@ -35,6 +35,7 @@ $cuentas = $conexion->query("SELECT * FROM CuentaContable ORDER BY tipo_cuenta, 
     <title>Ajustes Contables</title>
     <link rel="stylesheet" href="../../../public/css/ajustes.css">
     <link rel="stylesheet" href="../../../public/css/modal.css">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 <div class="container">

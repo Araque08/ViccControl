@@ -62,11 +62,12 @@ $materia_prima = $stmt_materia->get_result();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Receta</title>
     <link rel="stylesheet" href="/../../../public/css/menu.css">
     <link rel="stylesheet" href="/../../../public/css/ventas.css">
     <link rel="stylesheet" href="/../../../public/css/modal.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 

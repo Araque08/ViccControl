@@ -44,6 +44,7 @@ $proveedor = $result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
     <h2>Editar Proveedor</h2>

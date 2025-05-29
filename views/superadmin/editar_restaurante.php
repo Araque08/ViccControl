@@ -22,7 +22,8 @@ $restaurante = $resultado->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>editar restaurante</title>
-    <link rel="stylesheet" href="../public/css/admin.css">
+    <link rel="stylesheet" href="../../public/css/admin.css">
+    <link rel="icon" type="image/png" href="../../public/favicon.png">
 </head>
 <body>
     <div class="centrar">

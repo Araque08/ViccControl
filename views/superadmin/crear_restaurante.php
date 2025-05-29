@@ -12,6 +12,7 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'SuperAdmin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Restaurante</title>
+    <link rel="icon" type="image/png" href="../../public/favicon.png">
 </head>
 <body>
     <div class="centrar">

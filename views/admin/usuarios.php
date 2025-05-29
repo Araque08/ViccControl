@@ -40,6 +40,7 @@ $result_usuarios = $conexion->query($sql_usuarios);
     <title>Crear Usuario de Empleado</title>
     <link rel="stylesheet" href="../../public/css/usuarios_nuevos.css"> <!-- Estilo si lo deseas -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../public/favicon.png">
 </head>
 <body>
     <div class="container-header">

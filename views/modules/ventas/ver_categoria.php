@@ -45,8 +45,6 @@ if (isset($_GET['id_categoria'])) {
     $stmt->close();
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +57,7 @@ if (isset($_GET['id_categoria'])) {
     <link rel="stylesheet" href="/../../../public/css/menu.css">
     <link rel="stylesheet" href="/../../../public/css/ventas.css">
     <link rel="stylesheet" href="/../../../public/css/modal.css">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 

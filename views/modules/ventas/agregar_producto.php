@@ -35,6 +35,7 @@ $producto = $result->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <title>Receta - <?= htmlspecialchars($producto['nombre_producto']) ?></title>
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
     <!--<h2>Receta de: <?= htmlspecialchars($producto['nombre_producto']) ?> (Precio: $<?= $producto['precioVenta'] ?>)</h2>-->

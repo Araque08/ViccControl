@@ -50,6 +50,7 @@ $lista_modulos = [
     <meta charset="UTF-8">
     <title>Módulos del Restaurante</title>
     <link rel="stylesheet" href="../../public/css/admin.css">
+    <link rel="icon" type="image/png" href="../../public/favicon.png">
 </head>
 <body>
     <h2>Módulos asignados a: <?= htmlspecialchars($restaurante['nombre_restaurante']) ?></h2>

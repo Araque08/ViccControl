@@ -48,6 +48,7 @@ $facturas = $conexion->query("SELECT f.id_factura, f.valor_factura, f.fecha_hora
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../public/css/transacciones.css">
     <link rel="stylesheet" href="../../../public/css/modal.css">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 <div class="container my-4">

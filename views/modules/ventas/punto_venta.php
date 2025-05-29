@@ -54,11 +54,12 @@ if ($resultMediosPago && $resultMediosPago->num_rows > 0) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-<title>Punto de Venta</title>
-<link rel="stylesheet" href="../../../public/css/punto_venta.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <title>Punto de Venta</title>
+  <link rel="stylesheet" href="../../../public/css/punto_venta.css">
+  <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 

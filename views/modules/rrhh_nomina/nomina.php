@@ -42,6 +42,7 @@ while ($d = $deducciones->fetch_assoc()) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="../../../public/css/nomina.css">
+    <link rel="icon" type="image/png" href="../../../public/favicon.png">
 </head>
 <body>
 
