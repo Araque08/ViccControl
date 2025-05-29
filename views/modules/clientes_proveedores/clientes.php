@@ -105,7 +105,7 @@ $resultado = $conexion->query($query);
                         <td><?= $row['fecha'] ?></td>
                         <td>$<?= number_format($row['total'], 2) ?></td>
                         <td>
-                        <button class="ver-detalle" data-id="<?= $row['cod_venta'] ?>">🧾 Ver</button>
+                        <a href="../../../modules/factura.php?id_venta=<?= $row['cod_venta'] ?>">🧾 Ver</a>
                         </td>
                     </tr>
                     <?php } ?>
