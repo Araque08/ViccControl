@@ -83,6 +83,12 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <nav class="nav">
         <!-- Módulos principales -->
         <div class="main-modules">
+            <a href="../../admin/usuarios.php">
+                <div class="module-card nav-menu">
+                    <img src="../../../public/img/Modulos/Usuarios.png" alt="Usuarios">
+                    <p>Contabilidad</p>
+                </div>
+            </a>
             <?php if (in_array('ventas', $modulos_activos)): ?>
                 <a href="../ventas/ventas_menu.php">
                     <div class="module-card nav-menu">
@@ -133,16 +139,20 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <h2>Modulo de Contabilidad</h2>
     <div class="module-detail-cards">
         <div class="module-card">
-            <img src="../../../public/img/ModuloContabilidad/TransaccionContable.png" alt="Punto de venta">
-            <div class="module-info">
-                <p>Transaccion Contable</p>
-            </div>
+            <a href="transacciones.php">
+                <img src="../../../public/img/ModuloContabilidad/TransaccionContable.png" alt="Punto de venta">
+                <div class="module-info">
+                    <p>Transaccion Contable</p>
+                </div>
+            </a>
         </div>
         <div class="module-card">
-            <img src="../../../public/img/ModuloContabilidad/AjustesContables.png" alt="Productos">
-            <div class="module-info">
-                <p>Ajustes Contables</p>
-            </div>
+            <a href="ajustes_contables.php">
+                <img src="../../../public/img/ModuloContabilidad/AjustesContables.png" alt="Productos">
+                <div class="module-info">
+                    <p>Ajustes Contables</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>

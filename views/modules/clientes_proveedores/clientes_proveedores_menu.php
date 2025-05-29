@@ -83,6 +83,12 @@ $mesActual = ucfirst(strftime("%B %Y"));
     <nav class="nav">
         <!-- Módulos principales -->
         <div class="main-modules">
+            <a href="../../admin/usuarios.php">
+                <div class="module-card nav-menu">
+                    <img src="../../../public/img/Modulos/Usuarios.png" alt="Usuarios">
+                    <p>Contabilidad</p>
+                </div>
+            </a>
             <?php if (in_array('ventas', $modulos_activos)): ?>
                 <a href="../ventas/ventas_menu.php">
                     <div class="module-card nav-menu">

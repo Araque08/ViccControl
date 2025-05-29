@@ -1,0 +1,32 @@
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+            text-decoration: none;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+        h1, h2 {
+            color: #343a40;
+        }
+        .form-control, .btn {
+            margin-bottom: 15px;
+        }
+        table th {
+            background-color: #343a40;
+            color: white;
+        }
+        table td, table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .regresar i{
+            font-size: 40px;
+            color: black;
+            text-decoration: none;
+        }

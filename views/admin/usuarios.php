@@ -17,6 +17,19 @@ $sql_empleados = "SELECT id_empleado, cedula, CONCAT(nombre_empleado, ' ', apell
                   WHERE cedula IS NOT NULL AND cedula <> ''";
 $result_empleados = $conexion->query($sql_empleados);
 
+$id_restaurante = $_SESSION['id_restaurante'];
+
+$sql_usuarios = "
+    SELECT u.id_usuario, u.nombre_usuario, e.cedula, CONCAT(e.nombre_empleado, ' ', e.apellido_empleado) AS nombre_completo, r.nombre_rol
+    FROM Usuario u
+    JOIN Empleado e ON u.fk_id_empleado = e.id_empleado
+    JOIN UsuarioRol ur ON u.id_usuario = ur.fk_id_usuario
+    JOIN Rol r ON ur.fk_id_rol = r.id_rol
+    WHERE e.fk_id_restaurante = $id_restaurante
+";
+$result_usuarios = $conexion->query($sql_usuarios);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +92,32 @@ $result_empleados = $conexion->query($sql_empleados);
 
             <button type="submit">Crear Usuario</button>
         </form>
+        <div class="usuario-lista" style="margin: 40px 0;">
+            <h2>👥 Usuarios Registrados del Restaurante</h2>
+            <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                <thead style="background-color: #f0f0f0;">
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($u = $result_usuarios->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= $u['id_usuario'] ?></td>
+                            <td><?= $u['nombre_usuario'] ?></td>
+                            <td><?= $u['cedula'] ?></td>
+                            <td><?= $u['nombre_completo'] ?></td>
+                            <td><?= $u['nombre_rol'] ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>

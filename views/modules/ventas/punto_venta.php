@@ -1,12 +1,12 @@
 <?php
 session_start();
 
+include("../../../conexionBD/conexion.php");
+
 if (!isset($_SESSION['Usuario'])) {
     header("Location: ../../../index.php");
     exit;
 }
-
-include("../../../conexionBD/conexion.php");
 
 // ⏱ Tiempo límite de inactividad (en segundos)
 $tiempo_limite = 1200;

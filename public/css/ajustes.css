@@ -1,0 +1,74 @@
+body {
+    background-color: #f4f4f9;
+    color: black;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 2rem;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #f4f4f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border: 1px solid black;
+}
+
+h1, h2 {
+    text-align: center;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+.formulario {
+    display: grid;   
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.formulario input, .formulario select {
+    padding: 0.5rem;
+    background: white;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: black;
+}
+
+.formulario button {
+    padding: 0.8rem;
+    background: yellow;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background: yellow;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th, .tabla td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.tabla th {
+    background-color: yellow;
+    color: #000;
+}
+
+.regresar i{
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+}
