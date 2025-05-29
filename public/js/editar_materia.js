@@ -34,7 +34,7 @@ window.onclick = function(event) {
     let modal = document.getElementById("nuevoModal");
     let modal1 = document.getElementById("nuevaCategoriaModal");
     modal.addEventListener('click', cerrar(modal, event));
-    modal1.addEventListener('click', cerrar(modal1, event));
+    modal.addEventListener('click', cerrar(modal1, event));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
