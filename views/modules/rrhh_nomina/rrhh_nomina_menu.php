@@ -145,7 +145,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
             </a>
         </div>
         <div class="module-card">
-            <a href="#">
+            <a href="nomina.php">
                 <img src="../../../public/img/ModulorhNomina/Nomina.png" alt="Productos">
                 <div class="module-info">
                     <p>Nomina</p>
