@@ -91,7 +91,7 @@ $mesActual = ucfirst(strftime("%B %Y"));
             <a href="../../admin/usuarios.php">
                 <div class="module-card nav-menu">
                     <img src="../../../public/img/Modulos/Usuarios.png" alt="Usuarios">
-                    <p>Contabilidad</p>
+                    <p>Usuarios</p>
                 </div>
             </a>
             <?php if (in_array('ventas', $modulos_activos)): ?>

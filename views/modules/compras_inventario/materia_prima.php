@@ -184,7 +184,7 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
         </div>
     </div>
     <!-- Modal para agregar nueva categoría -->
-   <div id="nuevaCategoriaModal" class="modal">
+    <div id="nuevaCategoriaModal" class="modal">
         <div class="modal-content">
             <span class="cerrar-modal">&times;</span>
             <div id="contenidoNuevaCategoria"></div>
@@ -199,6 +199,5 @@ $categorias_result = $stmt->get_result();  // Almacenar resultado de categorías
     </div>
 
     <script src="../../../public/js/editar_materia.js" ></script>
-    <script src="../../../public/js/compras_inventario.js"></script>
 </body>
 </html>
